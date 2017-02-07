@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<!-- Templates -->
+	<definition name="baseLayout" template="/WEB-INF/jsp/tar/layout/base-layout.jsp">
+		<put-attribute name="head" value="/WEB-INF/jsp/tar/layout/head.jsp" />
+		<put-attribute name="header" value="/WEB-INF/jsp/tar/layout/header.jsp" />
+		<put-attribute name="body" value="" />
+	</definition>
+
+	<!-- without header definition start -->
+    <definition name="tar/document"  template="/WEB-INF/jsp/tar/layout/layoutWithoutHeaderFooter.jsp">
+        <put-attribute name="head" value="/WEB-INF/jsp/tar/layout/head.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/tar/document.jsp" />
+    </definition>
+
+    <definition name="tar/createControlSample"  template="/WEB-INF/jsp/tar/layout/layoutWithoutHeaderFooter.jsp">
+        <put-attribute name="head" value="/WEB-INF/jsp/tar/layout/head.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/tar/createControlSample.jsp" />
+    </definition>
+
+    <definition name="common/*"  template="/WEB-INF/jsp/tar/layout/layoutWithoutHeaderFooter.jsp">
+        <put-attribute name="head" value="/WEB-INF/jsp/tar/layout/head.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/common/{1}.jsp" />
+    </definition>
+
+
+	<definition name="admin/userProjectList"  template="/WEB-INF/jsp/tar/layout/layoutWithoutHeaderFooter.jsp">
+        <put-attribute name="head" value="/WEB-INF/jsp/tar/layout/head.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/tar/admin/userProjectList.jsp" />
+	</definition>
+
+	<definition name="admin/user"  template="/WEB-INF/jsp/tar/layout/layoutWithoutHeaderFooter.jsp">
+		<put-attribute name="head" value="/WEB-INF/jsp/tar/layout/head.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/tar/admin/user.jsp" />
+	</definition>
+
+	<definition name="admin/addUserToProject"  template="/WEB-INF/jsp/tar/layout/layoutWithoutHeaderFooter.jsp">
+		<put-attribute name="head" value="/WEB-INF/jsp/tar/layout/head.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/tar/admin/addUserToProject.jsp" />
+	</definition>
+    <!-- without header definition end -->
+
+	<definition name="admin/*"  extends="baseLayout">
+        <put-attribute name="body" value="/WEB-INF/jsp/tar/admin/{1}.jsp" />
+    </definition>
+
+	<definition name="tar/*" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/tar/{1}.jsp" />
+	</definition>
+
+</tiles-definitions>

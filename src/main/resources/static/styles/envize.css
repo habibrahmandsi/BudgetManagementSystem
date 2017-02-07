@@ -1,0 +1,1021 @@
+@CHARSET "UTF-8";
+
+html {
+	box-sizing: border-box;
+}
+
+*, *:before, *:after {
+	box-sizing: inherit;
+}
+
+body, .ui-widget {
+	font-family: Roboto, sans-serif;
+	font-size: 14px;
+	font-weight: 400;
+	color: #333333;
+	line-height: 1.2;
+}
+
+.ui-widget-header {
+	background: #d8d8d8;
+}
+
+.ui-button {
+	padding: 6px 8px;
+}
+
+.ui-button.button-30px {
+	width: 30px;
+	height: 24px;
+}
+
+.ui-button.ui-state-default {
+	background: #0278ae;
+}
+
+.ui-button.ui-state-hover {
+	background: #068fbf;
+	color: #ffffff;
+}
+
+.ui-button-text {
+	color: #ffffff;
+}
+
+.ui-buttonset .ui-state-default.ui-state-active {
+	background: #0278ae;
+}
+
+.ui-buttonset .ui-state-default.ui-state-active .ui-button-text {
+	color: #ffffff;
+}
+
+.ui-buttonset .ui-state-default {
+	border-color: #0278ae;
+	background: #ffffff;
+}
+
+.ui-buttonset .ui-state-default .ui-button-text {
+	color: #0278ae;
+}
+
+.ui-buttonset .ui-state-default.ui-state-hover {
+	background: #068fbf;
+}
+
+.ui-buttonset .ui-state-default.ui-state-hover .ui-button-text {
+	color: #ffffff;
+}
+
+.ui-tabs {
+	border-top: 0;
+	padding: 0;
+}
+
+.ui-tabs .ui-tabs-nav {
+	border-left: 0;
+	border-right: 0;
+	border-radius: 0;
+	padding: 0;
+}
+
+.ui-tabs .ui-tabs-nav li {
+	border-radius: 0;
+	margin: 0;
+	border-top: 0;
+}
+
+.ui-tabs .ui-tabs-nav li:first-of-type {
+	border-left: 0;
+}
+
+.ui-tabs-nav {
+	margin: 0 0 -1px 0;
+	border-left: 0;
+}
+
+.ui-tabs-nav li.ui-state-active.ui-state-default {
+	background: #ffffff;
+}
+
+.ui-tabs-nav li.ui-state-active.ui-state-default a {
+	color: #365e9f;
+}
+
+.ui-tabs-nav li.ui-state-default {
+	background: #e5e7e7;
+}
+
+.ui-tabs-nav li.ui-state-default a {
+	color: #333333;
+}
+
+.block-highlight {
+	background-color: #fffbd2;
+}
+
+.block-selected {
+	background-color: #e4f0bf;
+}
+
+.text-note {
+	font-size: 11px;
+	font-style: italic;
+	color: #ed8b8b;
+}
+
+h1, .h1 {
+	font-family: Roboto Slab, serif;
+	font-size: 32px;
+	font-weight: 400;
+	color: #2c5d63;
+}
+
+h2, .h2 {
+	font-family: Roboto Slab, serif;
+	font-size: 28px;
+	font-weight: 300;
+	color: #333333;
+}
+
+h3, .h3 {
+	font-family: Roboto Slab, serif;
+	font-size: 20px;
+	font-weight: 300;
+	color: #333333;
+}
+
+h4, .h4 {
+	font-family: Roboto Slab, serif;
+	font-size: 15px;
+	font-weight: 400;
+	color: #333333;
+}
+
+/* Old Styles */
+iframe {
+	border: 0;
+	margin: 0;
+}
+
+/* spacer styles */
+.space-top {
+	margin-top: 12px;
+}
+
+.space-top-s {
+	margin-top: 6px;
+}
+
+.space-top-xs {
+	margin-top: 3px;
+}
+
+.space-left {
+	margin-left: 12px;
+}
+
+/* fix for manually applied button styles */
+.ui-button-text .ui-button-text {
+	padding: 0 !important;
+}
+
+/* Added by Sumon*/
+/*table {
+	color: #333; !* Lighten up font color *!
+	font-family: Helvetica, Arial, sans-serif; !* Nicer font *!
+	width: 640px;
+	border-collapse: collapse;
+	border-spacing: 0;
+	font-size: 13px;
+}
+
+td, th {
+	border: 1px solid #CCC;
+	height: 18px;
+}
+
+!* Make cells a bit taller *!
+
+th {
+	background: #F3F3F3; !* Light grey background *!
+	font-weight: bold; !* Make sure they're bold *!
+}
+
+td {
+	background: #FAFAFA; !* Lighter grey background *!
+	text-align: center; !* Center our text *!
+}*/
+
+.header-wrapper {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-color: #d8d8d8;
+}
+
+ul.menubar {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #333;
+}
+
+.menubar li {
+	float: left;
+}
+
+.menubar li a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+
+.menubar a:hover:not(.active) {
+	background-color: #111;
+}
+
+.active {
+	color: #333;
+	/*background-color:#4CAF50;*/
+}
+
+.cssmenu {
+	background: #d8d8d8 none repeat scroll 0 0;
+	box-sizing: content-box;
+	width: auto;
+}
+
+.cssmenu ul {
+	display: block;
+	font-size: 0;
+	line-height: 1;
+	list-style: outside none none;
+	margin: 0;
+	padding: 0;
+	float: right;
+}
+
+.cssmenu ul::after {
+	clear: both;
+	content: " ";
+	display: block;
+	font-size: 0;
+	height: 0;
+	visibility: hidden;
+}
+
+.cssmenu ul li {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+}
+
+.cssmenu.align-right ul li {
+	float: right;
+}
+
+.cssmenu.align-center ul {
+	font-size: 0;
+	text-align: center;
+}
+
+.cssmenu ul li a {
+	color: #fff;
+	display: block;
+	font-family: "Open Sans", sans-serif;
+	font-size: 12px;
+	font-weight: 700;
+	padding: 15px 25px;
+    padding-left: 5px;
+	position: relative;
+	text-decoration: none;
+	/*text-transform: uppercase;*/
+	/*transition: color 0.25s ease 0s;*/
+}
+
+.cssmenu ul li a:hover {
+	color: #333;
+}
+
+.cssmenu ul li a:hover::before {
+	width: 100%;
+}
+
+.cssmenu ul li a::after {
+	background: #fff none repeat scroll 0 0;
+	display: block;
+	height: 6px;
+	opacity: 0.5;
+	position: absolute;
+	right: -3px;
+	top: 19px;
+	width: 6px;
+}
+
+.cssmenu ul li a::before {
+	color: white;
+	background: #690bed none repeat scroll 0 0; /* underline color for menu/submenu hovering*/
+	bottom: 0;
+	content: "";
+	display: block;
+	height: 3px;
+	left: 0;
+	position: absolute;
+	transition: width 0.25s ease 0s;
+	width: 0;
+}
+
+.cssmenu ul li.last > a::after, .cssmenu ul li:last-child > a::after {
+	display: none;
+}
+
+.cssmenu ul li.active a {
+	color: #333;
+}
+
+.cssmenu ul li.active a::before {
+	width: 100%;
+}
+
+.cssmenu.align-right li.last > a::after, .cssmenu.align-right li:last-child > a::after {
+	display: block;
+}
+
+.cssmenu.align-right li:first-child a::after {
+	display: none;
+}
+
+.cssmenu li {
+	float: left;
+}
+
+.cssmenu li a, .dropbtn {
+	display: inline-block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+
+.cssmenu li a, .cssmenu li a:hover, .cssmenu .dropbtn {
+	/*background-color: #9b9b9b;*/
+	background-color: #9b9b9b;
+}
+
+.cssmenu .dropbtn {
+	color: black;
+}
+
+.cssmenu .dropbtn {
+	background-color: #d8d8d8 !important;
+}
+
+.cssmenu .dropbtn:hover {
+	background-color: #9b9b9b !important;
+}
+
+.cssmenu li.dropdown {
+	display: inline-block;
+}
+
+.cssmenu .dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	min-width: 200px;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	z-index: 2;
+	right: 0px;
+}
+
+.cssmenu .dropdown-content a {
+	color: white;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+	text-align: left;
+}
+
+.cssmenu .dropdown-content a:hover {
+	background-color: #f1f1f1
+}
+
+.cssmenu .dropdown:hover .dropdown-content {
+	display: block;
+}
+
+.header-left-part {
+	width: 20%;
+	float: left;
+}
+
+.header-right-part {
+	width: 50% !important;
+	float: right;
+}
+
+#logo {
+	color: black;
+	font-weight: 500;
+	padding-left: 10px;
+	font-size: 20px;
+	line-height: 2;
+	font-family: "Times", serif;
+}
+.login-wrapper-div{
+	width: 400px;
+	margin: 3em auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px 10px;
+    text-align: center;
+    background-color: white;
+}
+
+.login-div{
+    text-align: left;
+    margin: auto;
+    width: 70%;
+}
+
+.login-wrapper-div input[type=text], .login-wrapper-div input[type=password], .login-wrapper-div input[type=submit] {
+    width: 100%;
+    padding: 8px 15px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+#product {
+    color: #4d4b4b;
+    font-family: "Times",serif;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding-top: 0;
+    text-align: center;
+}
+
+#presented {
+    margin-top: 1.5em;
+}
+.alignCenter{
+ text-align: center;
+}
+
+.alert-danger {
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
+    border-radius: 3px;
+    padding: 10px;
+}
+.cursorPointer{
+    cursor: pointer;
+}
+
+.project-list{
+    margin: auto;
+    width: 60%;
+
+}
+
+.project-list .single-project-div{
+    background-color: #e9e9e9;
+    padding: 5px;
+    border: 1px solid #e9e9e9;
+    border-radius: 4px;
+    width: 50%;
+    margin: auto;
+    margin-top: 5px;
+}
+
+.single-project-div a{
+    color: rgba(59, 59, 59, 0.78);
+    font-weight: 600;
+    text-decoration: none !important;
+}
+
+.single-project-div:hover{
+    background-color: rgba(194, 194, 194, 0.82);
+    color: white;
+}
+.loggedUserFullname{
+    font-size:12px;
+    padding: 14px;
+    text-align: right;
+    font-weight: 600;
+}
+
+button.close {
+	padding: 0;
+	cursor: pointer;
+	background: 0 0;
+	border: 0;
+	-webkit-appearance: none
+}
+
+.alert-dismissable .close {
+	position: relative;
+	top: -2px;
+	right: -21px;
+	color: inherit
+}
+.successfulOrErrorMessages,.globalMessage{
+	margin-bottom: 5px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+#userForm label, #resetPasswordForm label, #relativityInstanceForm label,#envizeConfigForm label,#setup-project-form label
+,#dbConfigForm label,#generalConfigForm label{
+	margin-top: 10px;
+    color: #6a6a6a;
+    font-weight: 600;
+}
+.formRow{
+	clear: both;
+	margin-top: 5px;
+}
+.formLeftDiv{
+	width: 30%;
+	float: left;
+	text-align: right;
+	padding: 5px;
+}
+.formRightDiv{
+	width: 70%;
+	float: right;
+	text-align: left;
+	padding: 5px;
+}
+.icon{
+	width: 20px;
+	margin-left: 8px;
+	cursor: pointer;
+	padding:1px;
+}
+.icon:hover{
+	/*padding: 0px;*/
+}
+.error{
+	color: rgba(255, 0, 0, 0.76);
+    font-style: italic;
+    font-weight: 500 !important;
+    margin-top: 5px !important;
+}
+
+
+#wrapper {
+	width: 100%;
+}
+
+#page-wrapper {
+	padding: 0 3px;
+	min-height: 568px;
+	background-color: #fff;
+	border-top:1px solid #ddd ;
+
+}
+
+@media(min-width:768px) {
+	#page-wrapper {
+		position: inherit;
+		margin: 0 0 0 200px;
+		padding: 0 3px;
+		min-height: 1300px;
+		border-left: 1px solid #e7e7e7;
+	}
+}
+
+
+.navbar-static-side {
+	position: absolute;
+	width: 200px;
+	z-index: 1;
+}
+.navbar-default {
+	background-color: white;
+	border-color: #e7e7e7;
+}
+.titleLabel{
+	font-size: 20px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	font-weight: 500;
+}
+.noUnderline{
+	text-decoration: none;
+}
+
+#projectListTable tbody tr{
+	cursor: pointer;
+}
+.row{
+    margin-bottom: 5px;
+}
+.selected{
+	background-color: #428bca !important;
+    color: white !important;
+}
+.downArrow{
+	width: 22px;
+}
+.menuSeparator{
+	border-right: 1px solid #818181;
+	margin-right: 15px !important;
+}
+.subMenuSeparator{
+    border-top: 1px dashed white;
+}
+.panel{
+	margin-top: 5px;
+}
+.sideMenu ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.sideMenu ul li {
+    border: 1px solid #ddd;
+}
+.sideMenu ul li a {
+    text-decoration: none;
+    color: #000000;
+    padding: 10.5px 11px;
+    background-color: white;
+    display:block;
+}
+
+.sideMenu ul li a:hover, .sideMenu ul li .current {
+    color: white !important;
+    background-color: #428bca;
+}
+.configPageTitle{
+    margin-top: 0px;
+    font-weight: 400;
+}
+.formClass{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding: 10px;
+}
+.configRightPartWrapperDiv{
+    clear: both;
+    padding: 20px 15px;
+
+}
+.alertMessageWrapper{
+    margin-top: 5px;
+}
+.statusIcon{
+	width: 20px;
+	margin-left: 5px;
+}
+.connectedStatusLabel{
+	color: green;
+	font-style: italic;
+}
+.notConnectedStatusLabel{
+	color: rgba(255, 0, 0, 0.67);
+	font-style: italic;
+}
+#envizeConfigForm .formLeftDiv{
+	width: 35%;
+}
+
+#envizeConfigForm .formRightDiv{
+	width: 65%;
+	padding-left: 20px;
+}
+.nonBoldFont{
+	font-weight: 500!important;
+}
+.userSelected{
+    color: #1948ff;
+    font-weight: 600;
+}
+.userDetailsList .col-lg-12{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+#projectListTable tbody tr td, #userProjectListDiv table tbody tr td, #userListTable tbody tr td{
+	padding: 2px 2px;
+}
+#userProjectListDiv table tbody tr td .form-group{
+	margin-bottom: 2px;
+}
+.setupTabWrapperDiv .formRow, .generalConfigWrapperDiv.formRow{
+    padding: 0px 10px;
+}
+.setupTabWrapperDiv .formLeftDiv, .generalConfigWrapperDiv .formLeftDiv{
+  width: 45%;
+  text-align: left;
+}
+.setupTabWrapperDiv .formRightDiv, .generalConfigWrapperDiv .formRightDiv{
+  width: 54%;
+}
+.project-list-nav{
+	border-top: 1px solid #ddd;
+	padding: 10px;
+}
+.project-list-nav label{
+	font-weight: 600;
+	font-size: 15px;
+	color: #666666;
+}
+.project-list-nav li a{
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.project-list-nav li{
+    padding: 3px 0px;
+}
+.notif{
+	background-color: white;
+	border-radius: 30px;
+	color: black;
+	display: block;
+	font-size: 10px;
+	height: 20px;
+	line-height: 22px;
+	text-align: center;
+	width: 20px;
+}
+.checkbox-custom, .radio-custom {
+	opacity: 0;
+	position: absolute;
+}
+
+.checkbox-custom, .checkbox-custom-label, .radio-custom, .radio-custom-label {
+	display: inline-block;
+	vertical-align: middle;
+	margin: 5px;
+	cursor: pointer;
+}
+
+.checkbox-custom-label, .radio-custom-label {
+	position: relative;
+}
+
+.checkbox-custom + .checkbox-custom-label:before, .radio-custom + .radio-custom-label:before {
+	content: '';
+	background: #fff;
+	border: 2px solid #ddd;
+	display: inline-block;
+	vertical-align: middle;
+	width: 20px;
+	height: 20px;
+	padding: 2px;
+	margin-right: 10px;
+	text-align: center;
+}
+
+
+.checkbox-custom:checked + .checkbox-custom-label:before {
+	content: "\f00c";
+	font-family: 'FontAwesome';
+	background: rebeccapurple;
+	color: #fff;
+}
+
+.radio-custom + .radio-custom-label:before {
+	border-radius: 50%;
+}
+
+.radio-custom:checked + .radio-custom-label:before {
+	content: "\f00c";
+	font-family: 'FontAwesome';
+	color: #bbb;
+}
+
+.checkbox-custom:focus + .checkbox-custom-label, .radio-custom:focus + .radio-custom-label {
+	outline: 1px solid #ddd;
+}
+
+.projectHeadWrapper{
+	border: 1px solid #dddddd;
+	height: 40px;
+	margin: 5px 0px;
+	padding: 5px;
+}
+
+/*
+css menu 2 idea
+*/
+
+.projectHeadWrapper .cssmenu {
+    background: white;
+}
+
+.projectHeadWrapper .cssmenu .dropbtn{
+    background-color: white !important;
+}
+.projectHeadWrapper .cssmenu li a{
+    background-color: white;
+    color: black;
+    border-bottom: 1px solid #dddddd;
+}
+
+.projectHeadWrapper .cssmenu li a:hover, .projectHeadWrapper .cssmenu .dropbtn {
+    background-color: #f1f1f1;
+    color: black;
+}
+
+.projectHeadWrapper .cssmenu .dropbtn:hover {
+    background-color: #f1f1f1 !important;
+    color: black;
+}
+
+.projectHeadWrapper .cssmenu ul li a::before {
+    background: none;
+}
+.projectHeadWrapper .cssmenu .dropdown-content{
+    min-width: 230px;
+}
+.navbar-project-leftPanel{
+    position: absolute;
+    width: 200px;
+    z-index: 1;
+}
+
+.progressLeftMessage{
+	width: 70%;
+	float: left;
+	text-align: left;
+	font-size: 11px;
+	font-style: italic;
+	padding: 2px;
+}
+.progressRightMessage{
+	width: 30%;
+	float: right;
+	text-align: right;
+	font-size: 11px;
+	padding: 2px;
+}
+.progress{
+    margin-bottom: 0px;
+}
+.normalFornSize{
+    font-size: 14px;
+    font-style: normal;
+}
+.runningTaskTable tbody tr td .active, .queuedTaskTable tbody tr td .active, .failedTaskTable tbody tr td .active{
+	color: white !important;
+	font-style: italic !important;
+	font-weight: 600 !important;
+}
+.align-center{
+    text-align: center;
+}
+.lightFontColor{
+	color: #6a6a6a;
+}
+.disabled{
+	background: #d3d3d3 !important;
+    color: grey;
+}
+
+#datatableUserList tbody tr td{
+    padding: 3px 3px;
+}
+.runningTaskTable tbody tr td, .queuedTaskTable tbody tr td, .failedTaskTable tbody tr td{
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.bar {
+	-webkit-transition: width 30.0s ease !important;
+	-moz-transition: width 30.0s ease !important;
+	-o-transition: width 30.0s ease !important;
+	transition: width 30.0s ease !important;
+}​
+
+     /* The switch - the box around the slider */
+.switch {
+     position: relative;
+     /*display: inline-block;*/
+     width: 60px;
+     height: 34px;
+ }
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    width: 55px;
+    height: 29px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 21px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* The switch - the box around the slider */
+.switch-mini {
+	position: relative;
+	/*display: inline-block;*/
+	width: 50px;
+	height: 25px;
+	margin-bottom: 0px !important;
+}
+
+/* Hide default HTML checkbox */
+.switch-mini input {display:none;}
+
+/* The slider */
+.slider-mini {
+	position: absolute;
+	cursor: pointer;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+	width: 45px;
+	height: 20px;
+}
+
+.slider-mini:before {
+	position: absolute;
+	content: "";
+	height: 14px;
+	width: 14px;
+	left: 4px;
+	bottom: 3px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+input:checked + .slider-mini {
+	background-color: #2196F3;
+}
+
+input:focus + .slider-mini {
+	box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider-mini:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+}
+
+.slider-mini.round {
+	border-radius: 34px;
+}
+
+.slider-mini.round:before {
+	border-radius: 50%;
+}
+
+#userListTable .switch{
+    margin-bottom: 18px !important;
+}
+.customError{
+	font-style: italic;
+	color: red;
+	border: 1px solid red;
+}
