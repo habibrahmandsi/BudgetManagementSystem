@@ -408,12 +408,12 @@ ul.menubar {
 }
 
 .header-left-part {
-	width: 20%;
+	width: 30%;
 	float: left;
 }
 
 .header-right-part {
-	width: 50% !important;
+	width: 70% !important;
 	float: right;
 }
 
@@ -1018,4 +1018,76 @@ input:checked + .slider-mini:before {
 	font-style: italic;
 	color: red;
 	border: 1px solid red;
+}
+
+.previewPhoto{
+	width: 200px;
+	height: 200px;
+	border: 2px solid rgba(0, 0, 0, 0.15);
+	border-radius: 10px;
+}
+.required{
+	color: red;
+}
+.roundImage{
+	width: 30px !important;
+	height: 30px !important;
+	border-radius: 100px;
+	border: 2px solid rgba(0, 0, 0, 0.26);
+}
+.typeahead-list li a table{
+    margin-bottom: 0px;
+}
+.typeahead-list table tr td{
+    font-size: 10px;
+}
+.headerSuggestions{
+    font-weight: 700;
+}
+
+.typeahead-list a, .typeahead-dropdown > li > a{
+    padding: 5px 2px !important;
+}
+
+.typeahead-list > li > a:hover,
+.typeahead-list > li > a:focus,
+.typeahead-list > li.active > a,
+.typeahead-dropdown > li > a:hover,
+.typeahead-dropdown > li > a:focus,
+.typeahead-dropdown > li.active > a {
+    background-color: #47cf55 !important;
+    color: #fff !important;
+}
+
+.tt-suggestion{
+    font-size: 10px;
+}
+
+.shareHolderDetailsDiv table.detailsInfoTable tbody tr td:first-child{
+    text-align: right;
+    width: 30%;
+}
+.shareHolderDetailsDiv table.detailsInfoTable tbody tr td:nth-child(2){
+    text-align: left;
+    width: 52%;
+    font-weight: 600;
+}
+.shareHolderDetailsDiv{
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.26);
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.shareHolderPicWrapperDiv{
+    padding: 3px;
+    border: 2px solid rgba(0, 0, 0, 0.26);
+    border-radius: 7px;
+    text-align: center;
+    /*width: 130px;*/
+    /*height: 130px;*/
+}
+.shareHolderPicWrapperDiv img{
+    width: 100px !important;
+    height: 100px !important;
 }

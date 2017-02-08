@@ -19,8 +19,6 @@
 <script type="text/javascript" src="<c:url value="/scripts/bootstrap.min.js"/>" ></script>
 <script type="text/javascript" src="<c:url value="/scripts/highcharts.js"/>" ></script>
 <script type="text/javascript" src="<c:url value="/scripts/highcharts-more.js"/>" ></script>
-<script type="text/javascript" src="<c:url value="/scripts/highcharts/solid-gauge.js"/>" ></script>
-<script type="text/javascript" src="<c:url value="/scripts/taskProgressWidget.js"/>" ></script>
 <script type="text/javascript" src="<c:url value="/scripts/validation/jquery.validate.js"/>" ></script>
 <script type="text/javascript" src="<c:url value="/scripts/underscore-min.js"/>" ></script>
 <script type="text/javascript" src="<c:url value="/scripts/util.js"/>" ></script>

@@ -48,3 +48,13 @@ function ConvertFormToJSON(form){
 
     return json;
 }
+function makeEditDeleteDetailsBtn(list) {
+    var object = {};
+    var btn = "";
+    $.each(list, function (index) {
+        object = list[index];
+        //btn += '<a href="'+object.href+'" class="'+object.classes+'"> <i class="'+object.icon+'"></i> '+object.btnName+'</a>';
+        btn += '<a href="' + object.href + '" data-id="' + object.dataId + '" class="' + object.classes + ' customBtn" title="' + object.btnName + '"><i class="' + object.icon + '"></i></a>';
+    });
+    return btn;
+}

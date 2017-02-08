@@ -152,6 +152,12 @@
 			<artifactId>spring-boot-starter-batch</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>eu.bitwalker</groupId>
+			<artifactId>UserAgentUtils</artifactId>
+			<version>1.15</version>
+		</dependency>
+
 	</dependencies>
 	
 	<build>

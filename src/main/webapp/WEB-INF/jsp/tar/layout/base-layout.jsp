@@ -13,15 +13,5 @@
     <%@ include file="/WEB-INF/jsp/tar/layout/message.jsp" %>
 	<tiles:insertAttribute name="body" />
 
-    <script type="text/javascript">
-        $(function() {
-            var ctxRoot = '${pageContext.request.contextPath}';
-            var projectId = '${envityProject.id}';
-            Recenseo.Tar.init({
-                contextRoot: ctxRoot,
-                projectId:projectId
-            });
-        });
-    </script>
 </body>
 </html>

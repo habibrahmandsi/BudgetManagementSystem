@@ -28,7 +28,7 @@
 
                 <div class="alignCenter">
                     <div id="presented">Presented By:</div>
-                    <img style="height: 32px;" src="/images/iControlESI_logo.jpg">
+                    <img style="height: 25px;" src="/images/Macrosoft-logo.png">
                 </div>
 		</div>
 		</div>

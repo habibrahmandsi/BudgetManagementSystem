@@ -1,6 +1,6 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.icontrolesi.envity.util.Constants" %>
+<%@ page import="com.macrosoft.bms.util.Constants" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
@@ -9,20 +9,8 @@
 
 <div class="header-wrapper">
     <div class="header-left-part">
-        <div class="cursorPointer" onclick="window.location='/tar/landing'" id="logo"><spring:message
-                code="project.name"/>
-            <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
-                <div class="cssmenu header-right-part">
-                    <ul>
-                        <li class="dropdown">
-                            <a style="padding: 10px 5px;" href="#" class="dropbtn ">
-                                <spring:message code="header.menu.report"/>
-                                <img class="downArrow" src="/images/down-arrow-icon.png">
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </sec:authorize>
+        <div class="cursorPointer" onclick="window.location='/admin/landing.do'" id="logo"><strong><spring:message
+                code="project.name"/></strong>
         </div>
     </div>
 
@@ -44,22 +32,33 @@
             <ul class="menuSeparator">
                 <li class="dropdown">
                     <a style="padding: 10px 5px;" href="#" class="dropbtn ">
-                        <img class="downArrow" src="/images/settings-icon.png">
+                        <img class="downArrow" src="/images/share-holder-icon.png"> Share Holders
                         <img class="downArrow" src="/images/down-arrow-icon.png">
                     </a>
                     <div class="dropdown-content">
-                        <a href="/admin/generalConfiguration"><spring:message code="header.menu.credit"/></a>
-                        <a href="/admin/userList"><spring:message code="header.menu.debit"/></a>
+                        <a href="/admin/upsertShareHolder.do"><spring:message code="header.menu.shareHolder.add"/></a>
+                        <a href="/admin/shareHolderList.do"><spring:message code="shareHolder.list.header"/></a>
                     </div>
                 </li>
                 <li class="dropdown">
                     <a style="padding: 10px 5px;" href="#" class="dropbtn ">
-                        <img class="downArrow" src="/images/settings-icon.png">
+                        <img class="downArrow" src="/images/cash-icon.png">&nbsp;Transaction
                         <img class="downArrow" src="/images/down-arrow-icon.png">
                     </a>
                     <div class="dropdown-content">
-                        <%--<a href="/admin/generalConfiguration"><spring:message code="header.menu.generalConfig"/></a>--%>
-                        <%--<a href="/admin/userList"><spring:message code="header.menu.userAdministration"/></a>--%>
+                        <a href="/admin/upsertDeposit.do"><spring:message code="header.menu.credit"/></a>
+                        <a href="/admin/depositList.do"><spring:message code="header.menu.deposit.list"/></a>
+                        <a href="/admin/userList.do"><spring:message code="header.menu.debit"/></a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a style="padding: 10px 5px;" href="#" class="dropbtn ">
+                        <img class="downArrow" src="/images/report-icon.png">Reports
+                        <img class="downArrow" src="/images/down-arrow-icon.png">
+                    </a>
+                    <div class="dropdown-content">
+                        <a href="/admin/depositList.do"><spring:message code="header.menu.credit"/></a>
+                        <a href="/admin/userList.do"><spring:message code="header.menu.debit"/></a>
                     </div>
                 </li>
             </ul>
