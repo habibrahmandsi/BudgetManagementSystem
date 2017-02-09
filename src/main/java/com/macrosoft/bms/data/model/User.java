@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="envity_user")
+@Table(name="user")
 public class User {
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(insertable=false,updatable=false)
@@ -22,6 +22,10 @@ public class User {
     private boolean enabled;
 
     private String role;
+
+    @ManyToOne
+    @JoinColumn(name="share_holder_id")
+    private ShareHolder shareHolder;
 
     @Transient
     private String newPassword;
@@ -111,5 +115,13 @@ public class User {
 
     public String getFullName() {
         return this.firstName+" "+this.getLastName();
+    }
+
+    public ShareHolder getShareHolder() {
+        return shareHolder;
+    }
+
+    public void setShareHolder(ShareHolder shareHolder) {
+        this.shareHolder = shareHolder;
     }
 }

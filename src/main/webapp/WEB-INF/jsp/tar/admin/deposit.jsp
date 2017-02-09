@@ -36,7 +36,7 @@
                                     <div class="typeahead-container">
                                         <div class="typeahead-field">
                                      <span class="typeahead-query">
-                                     <input class="shareHolderName form-control" type="search" autofocus="true"
+                                     <input class="shareHolderName form-control" name="name" type="search" autofocus="true"
                                             autocomplete="off">
                                      </span>
                                         </div>
@@ -46,7 +46,10 @@
                             <div class="form-group">
                                 <label><spring:message code="deposit.payment.method"/><span
                                         class="required">*</span></label>
-                                <form:input path="method" cssClass="form-control"/>
+                                <form:select path="method" cssClass="form-control">
+                                    <option value=""> -- Select Any One --</option>
+                                    <form:options items="${paymentMethodList}" itemLabel="label" itemValue="name"/>
+                                </form:select>
                             </div>
 
                             <div class="form-group">
@@ -96,8 +99,47 @@
             reDrawShareHolderDetails(obj);
 
         });
+
+        /* initial form validation declaration */
+        console.log('initiliaze validation....');
+
+        depositFormValidation();
     });
 
+    function depositFormValidation() {
+        $("#depositForm").bootstrapValidator({
+            fields: {
+                name: {
+                    validators: {
+                        notEmpty: {
+                            message: "Not Empty"
+                        }
+                    }
+                },
+                method: {
+                    validators: {
+                        notEmpty: {
+                            message: "Not Empty"
+                        }
+                    }
+                },
+                referenceNo: {
+                    validators: {
+                        notEmpty: {
+                            message: "Not Empty"
+                        }
+                    }
+                },
+                amount: {
+                    validators: {
+                        notEmpty: {
+                            message: "Not Empty"
+                        }
+                    }
+                }
+            }
+        });
+    }
     function makeTabularAutoCompleteForUser(inputIdOrClass, url, searchColName, callback) {
         $(inputIdOrClass).typeahead({
             minLength: 1,
@@ -222,10 +264,6 @@
             +'<img src="/admin/getImage.do?imgId='+empObject.photoName+'&sex='+empObject.sex+'&imgSize=5">'
             +'</div>'
             +'</td>'
-            +'</tr>'
-            +'<tr>'
-            +'<td>Name :</td>'
-            +'<td>'+empObject.name+'</td>'
             +'</tr>'
             +'<tr>'
             +"<td>Father's Name :</td>"

@@ -14,6 +14,16 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-lg-12">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4" style="text-align: center; font-size: 20px;">
+                <label class="nonBoldFont"> Total Deposited Amount: <font style="font-weight: 600;">${allDeposit}</font> tk.</label>
+            </div>
+            <div class="col-lg-4"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
                 <div class="pull-right">
                     <input type="button" class="addNewDeposit btn btn-primary"
                            value="<spring:message code="deposit.new.btn"/>">
@@ -36,7 +46,7 @@
         var disabledRowId = [];
         var $createBtn = $(".addNewDeposit");
         $createBtn.click(function () {
-            window.location = "/admin/user";
+            window.location = "/admin/upsertDeposit.do";
         });
 
         // datatable initialization
@@ -53,19 +63,24 @@
                 return '<a href="javascript:void(0)" class="userProjectDetails cursorPointer" data-id="'+data.id+'">'+data.name+'</a>';
             }
             },
-            {"sTitle": "Father's Name", "mData": "fathersName", "bSortable": true},
-            {"sTitle": "Mother's Name", "mData": "mothersName", "bSortable": true},
+//            {"sTitle": "Father's Name", "mData": "fathersName", "bSortable": true},
+//            {"sTitle": "Mother's Name", "mData": "mothersName", "bSortable": true},
             {"sTitle": "Mobile No.", "mData": "mobile", "bSortable": true},
-            {"sTitle": "Deposit Amount", "mData": "amount", "bSortable": true},
-            {"sTitle": "Payment method", "mData": "mobile", "bSortable": true},
-            {"sTitle": "Reference No.", "mData": "mobile", "bSortable": true},
-            {"sTitle": "Added By", "mData": "mobile", "bSortable": true},
-            {"sTitle": "", "mData": "mobile", "bSortable": true},
+
+            {
+                "sTitle": "Deposit Amount", "mData": null, "bSortable": true, "render": function (data) {
+                return '<font style="color: red; font-weight: 600;">'+data.amount+'</font>';
+            }
+            },
+            {"sTitle": "Payment method", "mData": "method", "bSortable": true},
+            {"sTitle": "Reference No.", "mData": "referenceNo", "bSortable": true},
+            {"sTitle": "Added By", "mData": "createdBy", "bSortable": true},
             {
                 "sTitle": "Action icons", "mData": null, "bSortable": false, "render": function (data) {
-                var html = '<a class="editUser" title="Edit Share Holder" href="/admin/upsertShareHolder.do?shareHolderId=' + data.id + '"><img class="icon" src="/images/edit-icon.png"></a>';
-                html += '<a class="editUser" title="Details info of Share Holder" href="/admin/shareHolderDetails.do?shareHolderId=' + data.id + '"><img class="icon" src="/images/details-icon.png"></a>';
-                html += '<a class="deleteUser" title="Delete user" href="/admin/deleteUser?userId=' + data.id + '"><img class="icon" src="/images/delete-icon.png"></a>';
+//                var html = '<a class="editUser" title="Edit Share Holder" href="/admin/upsertShareHolder.do?shareHolderId=' + data.id + '"><img class="icon" src="/images/edit-icon.png"></a>';
+                var html = '<a class="editUser" title="Details info of Deposit" href="/admin/depositDetails.do?depositId=' + data.id + '"><img class="icon" src="/images/details-icon.png"></a>';
+                html += '<a class="allDeposit" title="All Deposit of '+data.name+'" href="/admin/allDepositOfSh.do?shareHolderId=' + data.id + '">All Deposits</a>';
+//                html += '<a class="deleteUser" title="Delete user" href="/admin/deleteUser?userId=' + data.id + '"><img class="icon" src="/images/delete-icon.png"></a>';
                 return html;
             }
             }

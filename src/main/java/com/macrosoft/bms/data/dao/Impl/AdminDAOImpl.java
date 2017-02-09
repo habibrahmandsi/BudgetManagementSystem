@@ -209,6 +209,7 @@ public class AdminDAOImpl implements AdminDAO {
                 + " shareHolder.mothersName as mothersName,"
                 + " shareHolder.email as email,"
                 + " amount as amount,"
+                + " createdBy.username as createdBy,"
                 + " date as date,"
                 + " method as method,"
                 + " referenceNo as referenceNo"
@@ -332,6 +333,56 @@ public class AdminDAOImpl implements AdminDAO {
             result.put("total", 0);
         return result;
     }
+
+    @Override
+    public Double getTotalDepositAmount(Integer shareHolderId) throws Exception {
+        String HQL = "select sum(amount) from Deposit";
+
+        if(shareHolderId > 0){
+            HQL += " WHERE shareHolder.id =:shareHolderId";
+        }
+
+        Query query = getCurrentSession().createQuery(HQL);
+
+        if(shareHolderId > 0){
+            query.setParameter("shareHolderId", shareHolderId);
+        }
+        return (Double)query.uniqueResult();
+    }
+
+    @Override
+    public List<Map> getDepositListByShareHolderId(Integer shareHolderId) throws Exception {
+        String sql = "SELECT "
+                + "new MAP("
+                + " id as id, "
+                + " shareHolder.name as name,"
+                + " shareHolder.mobile as mobile,"
+                + " shareHolder.photoPath as photoPath,"
+                + " shareHolder.photoName as photoName,"
+                + " shareHolder.fathersName as fathersName,"
+                + " shareHolder.mothersName as mothersName,"
+                + " shareHolder.email as email,"
+                + " amount as amount,"
+                + " createdBy.username as createdBy,"
+                + " date as date,"
+                + " method as method,"
+                + " referenceNo as referenceNo"
+                + ") "
+                + " FROM Deposit";
+
+        if (shareHolderId != null && shareHolderId > 0) {
+            sql += " WHERE shareHolder.id =:shareHolderId";
+        }
+
+        Query query = getCurrentSession().createQuery(sql);
+
+        if (shareHolderId != null && shareHolderId > 0) {
+            query.setParameter("shareHolderId", shareHolderId);
+        }
+
+        return query.list();
+    }
+
 
 }
 

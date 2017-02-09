@@ -26,6 +26,10 @@ public class Deposit {
     @JoinColumn(name="share_holder_id")
     private ShareHolder shareHolder;
 
+    @ManyToOne
+    @JoinColumn(name="created_by")
+    private User createdBy;
+
     public Integer getId() {
         return id;
     }
@@ -72,6 +76,14 @@ public class Deposit {
 
     public void setShareHolder(ShareHolder shareHolder) {
         this.shareHolder = shareHolder;
+    }
+
+    public User getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
     }
 
     @Override

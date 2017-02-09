@@ -1,10 +1,9 @@
 package com.macrosoft.bms.controller;
 
+import com.macrosoft.bms.data.PaymentMethodType;
 import com.macrosoft.bms.data.dao.Impl.AdminDAOImpl;
-import com.macrosoft.bms.data.model.DataModelBean;
-import com.macrosoft.bms.data.model.DataModelForTypeAhead;
-import com.macrosoft.bms.data.model.Deposit;
-import com.macrosoft.bms.data.model.ShareHolder;
+import com.macrosoft.bms.data.dao.Impl.UserDaoImpl;
+import com.macrosoft.bms.data.model.*;
 import com.macrosoft.bms.util.Constants;
 import com.macrosoft.bms.util.Utils;
 import org.apache.commons.lang.StringUtils;
@@ -38,6 +37,8 @@ public class AdminController {
 
     @Autowired
     private AdminDAOImpl adminDaoImpl;
+    @Autowired
+    private UserDaoImpl userDaoImpl;
 
 
     @InitBinder
@@ -108,14 +109,61 @@ public class AdminController {
         } catch (Exception e) {
             logger.error("ERROR:" + e);
         }
+        model.addAttribute("paymentMethodList", Arrays.asList(PaymentMethodType.values()));
         model.addAttribute("deposit", deposit);
         return "admin/deposit";
+    }
+
+    /*
+* Method for viewing landing Page
+* @param HttpServletRequest request, Model model
+* @return type String( or any .jsp File)
+*
+*/
+    @RequestMapping(value = "/admin/upsertDeposit.do", method = RequestMethod.POST)
+    public String upsertDepositPost(HttpServletRequest request, @ModelAttribute("deposit") Deposit deposit, Model model) {
+
+        logger.debug("*************** Upsert Deposit POST Controller ***************");
+//        logger.debug("::shareHolder:" + shareHolder);
+        Integer depositId = deposit.getId();
+        try {
+            User user = userDaoImpl.getUserByUserName(Utils.getLoggedInUsername());
+            deposit.setCreatedBy(user);
+            deposit.setDate(new Date());
+            adminDaoImpl.saveOrUpdate(deposit);
+
+            if (depositId != null){
+                Utils.setGreenMessage(request, Utils.getMessageBundlePropertyValue("deposit.update.success.msg"));
+                // Audit Trial tracking
+                adminDaoImpl.saveAuditTrial(Utils.getLoggedInUsername()+" have successfully updated "+" the data of reference No:'"+deposit.getReferenceNo()+"'.", request);
+            }
+            else{
+
+                Utils.setGreenMessage(request, Utils.getMessageBundlePropertyValue("deposit.save.success.msg"));
+                // Audit Trial tracking
+                adminDaoImpl.saveAuditTrial(Utils.getLoggedInUsername()+" have successfully saved "+" the data of reference No:'"+deposit.getReferenceNo()+"'.", request);
+            }
+        } catch (Exception ex) {
+            logger.error("CERROR:: Failed:" + ex);
+            if (depositId != null && depositId > 0) {
+                Utils.setErrorMessage(request, Utils.getMessageBundlePropertyValue("deposit.update.failed.msg")+" "+ex.getMessage());
+            } else {
+                Utils.setErrorMessage(request, Utils.getMessageBundlePropertyValue("deposit.save.failed.msg")+" "+ex.getMessage());
+            }
+        }
+
+        return "redirect:/admin/depositList.do";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/admin/depositList.do")
     public String depositListView(Model model) {
         logger.info("********* Deposit List Controller ************");
-
+        try {
+        Double allDeposit = adminDaoImpl.getTotalDepositAmount(0);
+        model.addAttribute("allDeposit",allDeposit == null? 0: allDeposit);
+        } catch (Exception ex) {
+            logger.error(":: ERROR:: Failed to load all deposit summation data:: " + ex);
+        }
         return "admin/depositList";
     }
 
@@ -126,7 +174,7 @@ public class AdminController {
         logger.info(":: Get Deposits List Ajax Controller ::");
         DataModelBean dataModelBean = new DataModelBean();
          /* this params is for dataTables */
-        String[] tableColumns = "name,url,username,status,version".split(",");
+        String[] tableColumns = ",name,fathersName,mothersName,mobile,amount,method,referenceNo,createdBy".split(",");
         int start = request.getParameter(Constants.IDISPLAY_START) != null ? Integer.parseInt(request.getParameter(Constants.IDISPLAY_START)) : 0;
         int length = request.getParameter(Constants.IDISPLAY_LENGTH) != null ? Integer.parseInt(request.getParameter(Constants.IDISPLAY_LENGTH)) : 5;
         int sEcho = request.getParameter(Constants.sEcho) != null ? Integer.parseInt(request.getParameter(Constants.sEcho)) : 0;
@@ -139,6 +187,7 @@ public class AdminController {
         Map<String, Object> userDataMap;
 
         try {
+
             int totalRecords = Math.toIntExact(adminDaoImpl.getDepositDataSize());
             logger.info("totalRecords:" + totalRecords + " length:" + length);
             if (length < 0) {
@@ -414,5 +463,30 @@ public class AdminController {
         }
 
         return dataModelForTypeAhead;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/admin/allDepositOfSh.do")
+    public String allDepositOfShView(Model model, HttpServletRequest request, @RequestParam(value = "shareHolderId", required = true) Integer shareHolderId) {
+        logger.info("********* all Deposit Of Share Holder Controller ************");
+        System.out.println("shareHolderId::"+shareHolderId);
+        ShareHolder shareHolder = new ShareHolder();
+        try {
+            if (shareHolderId > 0) {
+                shareHolder = adminDaoImpl.getShareHolderById(shareHolderId);
+                Double allDeposit = adminDaoImpl.getTotalDepositAmount(shareHolderId);
+                List<Map> depositList = adminDaoImpl.getDepositListByShareHolderId(shareHolderId);
+
+                model.addAttribute("totalInstallment", depositList != null? depositList.size() : 0);
+                model.addAttribute("depositList", depositList);
+                model.addAttribute("totalAmount",allDeposit == null? 0: allDeposit);
+                // Audit Trial tracking
+                adminDaoImpl.saveAuditTrial("<b>"+Utils.getLoggedInUsername()+"</b> "+ Utils.getMessageBundlePropertyValue("audit.total.deposit.view.message")
+                        +" '"+shareHolder.getName()+"'", request);
+            }
+        } catch (Exception e) {
+            logger.error("ERROR:" + e);
+        }
+        model.addAttribute("shareHolder", shareHolder);
+        return "admin/allDepositOfSh";
     }
 }
