@@ -63,6 +63,7 @@
                 "sTitle": "Action icons", "mData": null, "bSortable": false, "render": function (data) {
                 var html = '<a class="editUser" title="Edit Share Holder" href="/admin/upsertShareHolder.do?shareHolderId=' + data.id + '"><img class="icon" src="/images/edit-icon.png"></a>';
                 html += '<a class="editUser" title="Details info of Share Holder" href="/admin/shareHolderDetails.do?shareHolderId=' + data.id + '"><img class="icon" src="/images/details-icon.png"></a>';
+                html += '<a class="allDeposit" title="All Deposit of '+data.name+'" href="/admin/allDepositOfSh.do?shareHolderId=' + data.id + '">All Deposits</a>';
                 html += '<a class="deleteUser" title="Delete user" href="/admin/deleteUser?userId=' + data.id + '"><img class="icon" src="/images/delete-icon.png"></a>';
                 return html;
             }

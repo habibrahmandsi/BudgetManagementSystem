@@ -84,10 +84,22 @@ public class AdminController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/admin/landing.do")
-    public ModelAndView landingPage(HttpServletRequest request, @RequestParam(value = "action", required = false) String action) {
+    public String landingPage(HttpServletRequest request, @RequestParam(value = "action", required = false) String action, Model model) {
         System.out.println("----------------- tar/landing ---------------");
-        ModelAndView model = new ModelAndView("tar/landing");
-        return model;
+
+        try {
+            Double totalExpenseAmount = adminDaoImpl.getTotalExpenseAmount(null, null);
+            Double allDeposit = adminDaoImpl.getTotalDepositAmount(0);
+            List<ShareHolder> shareHolderList = adminDaoImpl.getAllShareHolderList();
+            model.addAttribute("shareHolderList",shareHolderList);
+            model.addAttribute("allDeposit",Utils.getTwoDigitAfterDecimal(allDeposit));
+            model.addAttribute("totalExpenseAmount",Utils.getTwoDigitAfterDecimal(totalExpenseAmount));
+            model.addAttribute("totalAvailableAmount",Utils.getTwoDigitAfterDecimal(allDeposit - totalExpenseAmount));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "tar/landing";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/admin/upsertDeposit.do")
@@ -95,7 +107,9 @@ public class AdminController {
         logger.info("********* Deposit create Controller ************");
         Integer depositId = request.getParameter("depositId") != null ? Integer.parseInt(request.getParameter("depositId")) : 0;
         Deposit deposit = new Deposit();
+        List<Map> installmentList = new ArrayList<>();
         try {
+            installmentList = adminDaoImpl.getInstallment();
             if (depositId > 0) {
                 deposit = adminDaoImpl.getDepositById(depositId);
                 // Audit Trial tracking
@@ -109,6 +123,7 @@ public class AdminController {
         } catch (Exception e) {
             logger.error("ERROR:" + e);
         }
+        model.addAttribute("installmentList", installmentList);
         model.addAttribute("paymentMethodList", Arrays.asList(PaymentMethodType.values()));
         model.addAttribute("deposit", deposit);
         return "admin/deposit";
@@ -160,7 +175,7 @@ public class AdminController {
         logger.info("********* Deposit List Controller ************");
         try {
         Double allDeposit = adminDaoImpl.getTotalDepositAmount(0);
-        model.addAttribute("allDeposit",allDeposit == null? 0: allDeposit);
+        model.addAttribute("allDeposit",allDeposit == null? 0: Utils.getTwoDigitAfterDecimal(allDeposit));
         } catch (Exception ex) {
             logger.error(":: ERROR:: Failed to load all deposit summation data:: " + ex);
         }
@@ -174,7 +189,7 @@ public class AdminController {
         logger.info(":: Get Deposits List Ajax Controller ::");
         DataModelBean dataModelBean = new DataModelBean();
          /* this params is for dataTables */
-        String[] tableColumns = ",name,fathersName,mothersName,mobile,amount,method,referenceNo,createdBy".split(",");
+        String[] tableColumns = ",name,fathersName,mothersName,mobile,installmentName,amount,method,referenceNo,createdBy".split(",");
         int start = request.getParameter(Constants.IDISPLAY_START) != null ? Integer.parseInt(request.getParameter(Constants.IDISPLAY_START)) : 0;
         int length = request.getParameter(Constants.IDISPLAY_LENGTH) != null ? Integer.parseInt(request.getParameter(Constants.IDISPLAY_LENGTH)) : 5;
         int sEcho = request.getParameter(Constants.sEcho) != null ? Integer.parseInt(request.getParameter(Constants.sEcho)) : 0;
@@ -478,7 +493,7 @@ public class AdminController {
 
                 model.addAttribute("totalInstallment", depositList != null? depositList.size() : 0);
                 model.addAttribute("depositList", depositList);
-                model.addAttribute("totalAmount",allDeposit == null? 0: allDeposit);
+                model.addAttribute("totalAmount",allDeposit == null? 0: Utils.getTwoDigitAfterDecimal(allDeposit));
                 // Audit Trial tracking
                 adminDaoImpl.saveAuditTrial("<b>"+Utils.getLoggedInUsername()+"</b> "+ Utils.getMessageBundlePropertyValue("audit.total.deposit.view.message")
                         +" '"+shareHolder.getName()+"'", request);
@@ -488,5 +503,197 @@ public class AdminController {
         }
         model.addAttribute("shareHolder", shareHolder);
         return "admin/allDepositOfSh";
+    }
+
+    /*
+* Method for viewing shareHolder create/update Page
+* @param HttpServletRequest request, Model model
+* @return type String( or any .jsp File)
+*
+*/
+    @RequestMapping(value = "/admin/upsertInstallment.do", method = RequestMethod.GET)
+    public String upsertInstallment(HttpServletRequest request, Model model) {
+        logger.debug("*************** Share Holder get Controller ***************");
+        Integer installmentId = request.getParameter("installmentId") != null ? Integer.parseInt(request.getParameter("installmentId")) : 0;
+        Installment installment = new Installment();
+        try {
+            if (installmentId > 0) {
+                installment = adminDaoImpl.getInstallmentById(installmentId);
+                // Audit Trial tracking
+                adminDaoImpl.saveAuditTrial("<b>"+Utils.getLoggedInUsername()+"</b> "+ Utils.getMessageBundlePropertyValue("audit.update.installment.view.message")
+                        +" '"+installment.getName()+"'", request);
+
+            } else {
+                logger.debug("for Save :" + installmentId);
+                // Audit Trial tracking
+                adminDaoImpl.saveAuditTrial("<b>"+Utils.getLoggedInUsername()+"</b> "+Utils.getMessageBundlePropertyValue("audit.new.installment.view.message"), request);
+            }
+        } catch (Exception e) {
+            logger.error("ERROR:" + e);
+        }
+        model.addAttribute("installment", installment);
+        return "admin/installment";
+    }
+
+    /*
+   * Method for viewing landing Page
+   * @param HttpServletRequest request, Model model
+   * @return type String( or any .jsp File)
+   *
+   */
+    @RequestMapping(value = "/admin/upsertInstallment.do", method = RequestMethod.POST)
+    public String upsertInstallmentPost(HttpServletRequest request, @ModelAttribute("installment") Installment installment, Model model) {
+
+        logger.debug("*************** Upsert Installment POST Controller ***************");
+        Integer employeeId = installment.getId();
+        try {
+            User user = userDaoImpl.getUserByUserName(Utils.getLoggedInUsername());
+            installment.setCreatedBy(user);
+            installment.setCreated(new Date());
+            adminDaoImpl.saveOrUpdate(installment);
+
+            if (employeeId != null){
+
+                Utils.setGreenMessage(request, Utils.getMessageBundlePropertyValue("installment.update.success.msg"));
+
+                // Audit Trial tracking
+                adminDaoImpl.saveAuditTrial(Utils.getLoggedInUsername()+" have successfully updated "+" the data of '"+installment.getName()+"'.", request);
+            }
+            else{
+
+                Utils.setGreenMessage(request, Utils.getMessageBundlePropertyValue("installment.save.success.msg"));
+                // Audit Trial tracking
+                adminDaoImpl.saveAuditTrial(Utils.getLoggedInUsername()+" have successfully saved "+" the data of '"+installment.getName()+"'.", request);
+            }
+        } catch (Exception ex) {
+            logger.error("CERROR:: Failed:" + ex);
+            if (installment.getId() != null && installment.getId() > 0) {
+                Utils.setErrorMessage(request, Utils.getMessageBundlePropertyValue("installment.update.failed.msg")+" "+ex.getMessage());
+            } else {
+                Utils.setErrorMessage(request, Utils.getMessageBundlePropertyValue("installment.save.failed.msg")+" "+ex.getMessage());
+            }
+        }
+
+        return "redirect:/admin/installmentList.do";
+    }
+
+    /*
+* Method for viewing installment create/update Page
+* @param HttpServletRequest request, Model model
+* @return type String( or any .jsp File)
+*
+*/
+    @RequestMapping(value = "/admin/installmentList.do", method = RequestMethod.GET)
+    public String installmentListView(HttpServletRequest request, Model model) {
+        logger.debug("*************** Installment list Controller ***************");
+        try {
+            int totalShare = Math.toIntExact(adminDaoImpl.getShareHolderDataSize());
+            List<Map> installmentList = adminDaoImpl.getInstallment();
+            List<Map> depositList = adminDaoImpl.getDepositListByShareHolderId(null);
+
+            model.addAttribute("totalShare",totalShare);
+            model.addAttribute("depositList",depositList);
+            model.addAttribute("installmentList",installmentList);
+        } catch (Exception e) {
+            logger.error("ERROR:" + e);
+        }
+        return "admin/installmentList";
+    }
+
+    /*
+* Method for viewing expense create/update Page
+* @param HttpServletRequest request, Model model
+* @return type String( or any .jsp File)
+*
+*/
+    @RequestMapping(value = "/admin/upsertExpense.do", method = RequestMethod.GET)
+    public String upsertExpenseView(HttpServletRequest request, Model model) {
+        logger.debug("*************** Upsert Expense Controller ***************");
+        Integer expenseId = request.getParameter("expenseId") != null ? Integer.parseInt(request.getParameter("expenseId")) : 0;
+        Expense expense = new Expense();
+
+        try {
+            if (expenseId > 0) {
+                expense = adminDaoImpl.getExpenseById(expenseId);
+                // Audit Trial tracking
+                adminDaoImpl.saveAuditTrial("<b>"+Utils.getLoggedInUsername()+"</b> "+ Utils.getMessageBundlePropertyValue("audit.update.expense.view.message")
+                        +" '"+expense.getId()+"'", request);
+
+            } else {
+                logger.debug("for Save :" + expenseId);
+                // Audit Trial tracking
+                adminDaoImpl.saveAuditTrial("<b>"+Utils.getLoggedInUsername()+"</b> "+Utils.getMessageBundlePropertyValue("audit.create.expense.message"), request);
+            }
+            List<ExpenseItem> expenseItemList = adminDaoImpl.getAllExpenseItem();
+            model.addAttribute("expenseItemList", expenseItemList);
+        } catch (Exception e) {
+            logger.error("ERROR:" + e);
+        }
+        model.addAttribute("expense", expense);
+        return "admin/expense";
+    }
+
+    /*
+* Method for viewing landing Page
+* @param HttpServletRequest request, Model model
+* @return type String( or any .jsp File)
+*
+*/
+    @RequestMapping(value = "/admin/upsertExpense.do", method = RequestMethod.POST)
+    public String upsertShareHolderPost(HttpServletRequest request, @ModelAttribute("expense") Expense expense, Model model) {
+        logger.debug("*************** Upsert Expense POST Controller ***************");
+        Integer expenseId = expense.getId();
+        try {
+            User user = userDaoImpl.getUserByUserName(Utils.getLoggedInUsername());
+            expense.setCreatedBy(user);
+            expense.setDate(new Date());
+            adminDaoImpl.saveOrUpdate(expense);
+
+            if (expenseId != null){
+
+                Utils.setGreenMessage(request, Utils.getMessageBundlePropertyValue("expense.update.success.msg"));
+
+                // Audit Trial tracking
+                adminDaoImpl.saveAuditTrial(Utils.getLoggedInUsername()+" have successfully updated "+" the data of '"+expense.getId()+"'.", request);
+            }
+            else{
+
+                Utils.setGreenMessage(request, Utils.getMessageBundlePropertyValue("expense.save.success.msg"));
+                // Audit Trial tracking
+                adminDaoImpl.saveAuditTrial(Utils.getLoggedInUsername()+" have successfully saved "+" the data of '"+expense.getId()+"'.", request);
+            }
+        } catch (Exception ex) {
+            logger.error("CERROR:: Failed:" + ex);
+            if (expense.getId() != null && expense.getId() > 0) {
+                Utils.setErrorMessage(request, Utils.getMessageBundlePropertyValue("expense.update.failed.msg")+" "+ex.getMessage());
+            } else {
+                Utils.setErrorMessage(request, Utils.getMessageBundlePropertyValue("expense.save.failed.msg")+" "+ex.getMessage());
+            }
+        }
+
+        return "redirect:/admin/expenseList.do";
+    }
+
+    /*
+* Method for viewing expense create/update Page
+* @param HttpServletRequest request, Model model
+* @return type String( or any .jsp File)
+*
+*/
+    @RequestMapping(value = "/admin/expenseList.do", method = RequestMethod.GET)
+    public String expenseListList(HttpServletRequest request, Model model) {
+        logger.debug("*************** Expense List Controller ***************");
+
+        try {
+            List<Expense> expenseList = adminDaoImpl.getAllExpenseList(null, null);
+            List<ExpenseItem> expenseItemList = adminDaoImpl.getAllExpenseItem();
+            Double totalExpenseAmount = adminDaoImpl.getTotalExpenseAmount(null, null);
+            model.addAttribute("expenseList", expenseList);
+            model.addAttribute("totalExpenseAmount", Utils.getTwoDigitAfterDecimal(totalExpenseAmount));
+            model.addAttribute("expenseItemList", expenseItemList);
+        } catch (Exception e) {
+            logger.error("ERROR:" + e);
+        }
+        return "admin/expenseList";
     }
 }

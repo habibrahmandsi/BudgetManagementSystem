@@ -8,10 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 
 import com.macrosoft.bms.data.dao.AdminDAO;
-import com.macrosoft.bms.data.model.AuditTrial;
-import com.macrosoft.bms.data.model.Deposit;
-import com.macrosoft.bms.data.model.ShareHolder;
-import com.macrosoft.bms.data.model.User;
+import com.macrosoft.bms.data.model.*;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -104,7 +101,7 @@ public class AdminDAOImpl implements AdminDAO {
         List<ShareHolder> list = query.list();
 
         if(list != null && list.size() > 0){
-            return list.get(list.size()-1);
+            return list.get(0);
         }
         return null;
     }
@@ -163,15 +160,15 @@ public class AdminDAOImpl implements AdminDAO {
 
 
         if (!StringUtils.isEmpty(searchKey)) {
-            query.setParameter("name",searchKey + "%");
-            query.setParameter("sex",searchKey + "%");
-            query.setParameter("religion",searchKey + "%");
-            query.setParameter("mobile",searchKey + "%");
-            query.setParameter("nationalId",searchKey + "%");
-            query.setParameter("fathersName",searchKey + "%");
-            query.setParameter("mothersName",searchKey + "%");
-            query.setParameter("spouseName",searchKey + "%");
-            query.setParameter("email",searchKey + "%");
+            query.setParameter("name","%"+searchKey + "%");
+            query.setParameter("sex","%"+searchKey + "%");
+            query.setParameter("religion","%"+searchKey + "%");
+            query.setParameter("mobile","%"+searchKey + "%");
+            query.setParameter("nationalId","%"+searchKey + "%");
+            query.setParameter("fathersName","%"+searchKey + "%");
+            query.setParameter("mothersName","%"+searchKey + "%");
+            query.setParameter("spouseName","%"+searchKey + "%");
+            query.setParameter("email","%"+searchKey + "%");
 
         }
 
@@ -201,6 +198,7 @@ public class AdminDAOImpl implements AdminDAO {
         StringBuilder sql = new StringBuilder("SELECT "
                 + "new MAP("
                 + " id as id, "
+                + " shareHolder.id as shareHolderId,"
                 + " shareHolder.name as name,"
                 + " shareHolder.mobile as mobile,"
                 + " shareHolder.photoPath as photoPath,"
@@ -208,6 +206,7 @@ public class AdminDAOImpl implements AdminDAO {
                 + " shareHolder.fathersName as fathersName,"
                 + " shareHolder.mothersName as mothersName,"
                 + " shareHolder.email as email,"
+                + " installment.name as installmentName,"
                 + " amount as amount,"
                 + " createdBy.username as createdBy,"
                 + " date as date,"
@@ -217,14 +216,15 @@ public class AdminDAOImpl implements AdminDAO {
                 + " FROM Deposit");
 
         if (!StringUtils.isEmpty(searchKey)) {
-            sql.append(" WHERE (lower(name) LIKE lower(:name)");
-            sql.append(" OR lower(mobile) LIKE lower(:mobile)");
-            sql.append(" OR lower(fathersName) LIKE lower(:fathersName)");
-            sql.append(" OR lower(mothersName) LIKE lower(:mothersName)");
-            sql.append(" OR lower(email) LIKE lower(:email))");
-            sql.append(" OR lower(amount) LIKE lower(:amount))");
-            sql.append(" OR lower(method) LIKE lower(:method))");
-            sql.append(" OR lower(referenceNo) LIKE lower(:referenceNo))");
+            sql.append(" WHERE (lower(shareHolder.name) LIKE lower(:name)");
+            sql.append(" OR lower(shareHolder.mobile) LIKE lower(:mobile)");
+//            sql.append(" OR lower(fathersName) LIKE lower(:fathersName)");
+//            sql.append(" OR lower(mothersName) LIKE lower(:mothersName)");
+//            sql.append(" OR lower(email) LIKE lower(:email))");
+            sql.append(" OR lower(amount) LIKE lower(:amount)");
+            sql.append(" OR lower(method) LIKE lower(:method)");
+            sql.append(" OR lower(referenceNo) LIKE lower(:referenceNo)");
+            sql.append(" OR lower(installment.name) LIKE lower(:installmentName))");
         }
 
         if(!StringUtils.isEmpty(sortColName)){
@@ -238,14 +238,15 @@ public class AdminDAOImpl implements AdminDAO {
         Query query = getCurrentSession().createQuery(sql.toString());
 
         if (!StringUtils.isEmpty(searchKey)) {
-            query.setParameter("name",searchKey + "%");
-            query.setParameter("mobile",searchKey + "%");
-            query.setParameter("fathersName",searchKey + "%");
-            query.setParameter("mothersName",searchKey + "%");
-            query.setParameter("email",searchKey + "%");
-            query.setParameter("amount",searchKey + "%");
-            query.setParameter("method",searchKey + "%");
-            query.setParameter("referenceNo",searchKey + "%");
+            query.setParameter("name", "%"+searchKey + "%");
+            query.setParameter("mobile","%"+searchKey + "%");
+//            query.setParameter("fathersName","%"+searchKey + "%");
+//            query.setParameter("mothersName","%"+searchKey + "%");
+//            query.setParameter("email","%"+searchKey + "%");
+            query.setParameter("amount","%"+searchKey + "%");
+            query.setParameter("method","%"+searchKey + "%");
+            query.setParameter("referenceNo","%"+searchKey + "%");
+            query.setParameter("installmentName","%"+searchKey + "%");
         }
 
         query.setFirstResult(start);
@@ -273,7 +274,7 @@ public class AdminDAOImpl implements AdminDAO {
         List<Deposit> list = query.list();
 
         if(list != null && list.size() > 0){
-            return list.get(list.size()-1);
+            return list.get(0);
         }
         return null;
     }
@@ -318,10 +319,10 @@ public class AdminDAOImpl implements AdminDAO {
 
 
         if (!StringUtils.isEmpty(searchKey)) {
-            query.setParameter("name",searchKey + "%");
-            query.setParameter("mobile",searchKey + "%");
-            query.setParameter("nationalId",searchKey + "%");
-            query.setParameter("email",searchKey + "%");
+            query.setParameter("name","%"+searchKey + "%");
+            query.setParameter("mobile","%"+searchKey + "%");
+            query.setParameter("nationalId","%"+searchKey + "%");
+            query.setParameter("email","%"+searchKey + "%");
 
         }
 
@@ -362,6 +363,8 @@ public class AdminDAOImpl implements AdminDAO {
                 + " shareHolder.fathersName as fathersName,"
                 + " shareHolder.mothersName as mothersName,"
                 + " shareHolder.email as email,"
+                + " installment.id as installmentId,"
+                + " installment.name as installmentName,"
                 + " amount as amount,"
                 + " createdBy.username as createdBy,"
                 + " date as date,"
@@ -383,6 +386,130 @@ public class AdminDAOImpl implements AdminDAO {
         return query.list();
     }
 
+    @Override
+    public Installment getInstallmentById(Integer installmentId) throws Exception {
+        String HQL = "FROM Installment WHERE id =:installmentId";
+        HQL += " ORDER BY id asc";
 
+        Query query = getCurrentSession().createQuery(HQL);
+
+        if(!StringUtils.isEmpty(installmentId)){
+            query.setParameter("installmentId", installmentId);
+        }
+        List<Installment> list = query.list();
+
+        if(list != null && list.size() > 0){
+            return list.get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public List<Map> getInstallment() throws Exception {
+        String sql = "SELECT "
+                + "new MAP("
+                + " id as id, "
+                + " name as name,"
+                + " active as active,"
+                + " amountToPay as amountToPay,"
+                + " created as created,"
+                + " activeFrom as activeFrom"
+//                + " createdBy.username as createdBy"
+                + ") "
+                + " FROM Installment";
+//        String sql = "FROM Installment ORDER BY id desc";
+
+        return getCurrentSession().createQuery(sql).list();
+    }
+
+    @Override
+    public List<ExpenseItem> getAllExpenseItem() throws Exception {
+        String HQL = "FROM ExpenseItem";
+        HQL += " ORDER BY id asc";
+
+        Query query = getCurrentSession().createQuery(HQL);
+
+        List<ExpenseItem> list = query.list();
+
+        if(list != null && list.size() > 0){
+            return list;
+        }
+        return null;
+    }
+
+    @Override
+    public Expense getExpenseById(Integer expenseId) throws Exception {
+        String HQL = "FROM Expense WHERE id =:expenseId";
+        HQL += " ORDER BY id asc";
+
+        Query query = getCurrentSession().createQuery(HQL);
+
+        if(!StringUtils.isEmpty(expenseId)){
+            query.setParameter("expenseId", expenseId);
+        }
+        List<Expense> list = query.list();
+
+        if(list != null && list.size() > 0){
+            return list.get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public Double getTotalExpenseAmount(Date fromDate, Date toDate) throws Exception {
+        String HQL = "select sum(amount) from Expense";
+
+        if(fromDate != null && toDate != null){
+            HQL += " WHERE date >=:fromDate AND date<=:toDate";
+        }
+
+        Query query = getCurrentSession().createQuery(HQL);
+
+        if(fromDate != null && toDate != null){
+            query.setParameter("fromDate", fromDate);
+            query.setParameter("toDate", toDate);
+        }
+        return (Double)query.uniqueResult();
+    }
+
+    @Override
+    public List<Expense> getAllExpenseList(Date fromDate, Date toDate) throws Exception {
+        String HQL = "FROM Expense";
+
+        if(fromDate != null && toDate != null){
+            HQL += " WHERE date >=:fromDate AND date<=:toDate";
+        }
+
+        HQL += " ORDER BY id asc";
+
+        Query query = getCurrentSession().createQuery(HQL);
+
+        if(fromDate != null && toDate != null){
+            query.setParameter("fromDate", fromDate);
+            query.setParameter("toDate", toDate);
+        }
+
+        List<Expense> list = query.list();
+
+        if(list != null && list.size() > 0){
+            return list;
+        }
+        return null;
+    }
+
+    @Override
+    public List<ShareHolder> getAllShareHolderList() throws Exception {
+        String HQL = "FROM ShareHolder";
+        HQL += " ORDER BY name asc";
+
+        Query query = getCurrentSession().createQuery(HQL);
+
+        List<ShareHolder> list = query.list();
+
+        if(list != null && list.size() > 0){
+            return list;
+        }
+        return null;
+    }
 }
 

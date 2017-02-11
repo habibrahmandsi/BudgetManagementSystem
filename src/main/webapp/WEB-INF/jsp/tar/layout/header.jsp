@@ -46,9 +46,12 @@
                         <img class="downArrow" src="/images/down-arrow-icon.png">
                     </a>
                     <div class="dropdown-content">
+                        <a href="/admin/upsertInstallment.do"><spring:message code="header.menu.new.installment"/></a>
+                        <a href="/admin/installmentList.do"><spring:message code="header.menu.installment.list"/></a>
                         <a href="/admin/upsertDeposit.do"><spring:message code="header.menu.credit"/></a>
                         <a href="/admin/depositList.do"><spring:message code="header.menu.deposit.list"/></a>
-                        <a href="/admin/userList.do"><spring:message code="header.menu.debit"/></a>
+                        <a href="/admin/upsertExpense.do"><spring:message code="header.menu.new.debit"/></a>
+                        <a href="/admin/expenseList.do"><spring:message code="header.menu.debit"/></a>
                     </div>
                 </li>
                 <li class="dropdown">

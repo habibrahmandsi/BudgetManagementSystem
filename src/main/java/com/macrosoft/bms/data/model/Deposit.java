@@ -27,6 +27,10 @@ public class Deposit {
     private ShareHolder shareHolder;
 
     @ManyToOne
+    @JoinColumn(name="installment_id")
+    private Installment installment;
+
+    @ManyToOne
     @JoinColumn(name="created_by")
     private User createdBy;
 
@@ -78,6 +82,14 @@ public class Deposit {
         this.shareHolder = shareHolder;
     }
 
+    public Installment getInstallment() {
+        return installment;
+    }
+
+    public void setInstallment(Installment installment) {
+        this.installment = installment;
+    }
+
     public User getCreatedBy() {
         return createdBy;
     }
@@ -95,6 +107,8 @@ public class Deposit {
                 ", method='" + method + '\'' +
                 ", referenceNo='" + referenceNo + '\'' +
                 ", shareHolder=" + shareHolder +
+                ", installment=" + installment +
+                ", createdBy=" + createdBy +
                 '}';
     }
 }

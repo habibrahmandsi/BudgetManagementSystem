@@ -88,6 +88,7 @@
                         <%--<th class="headerFont">Name</th>--%>
                         <th class="headerFont">Payment Method</th>
                         <th class="headerFont">Reference No.</th>
+                        <th class="headerFont">Installment Name</th>
                         <th class="headerFont">Added By</th>
                         <th class="headerFont">Date</th>
                         <th class="headerFont">Amount</th>
@@ -100,13 +101,14 @@
                         <%--<td>${obj.name}</td>--%>
                         <td>${obj.method}</td>
                         <td>${obj.referenceNo}</td>
+                        <td>${obj.installmentName}</td>
                         <td>${obj.createdBy}</td>
                         <td>${obj.date}</td>
                         <td>${obj.amount}</td>
                     </tr>
                     </c:forEach>
                     <tr>
-                        <td colspan="5" style="font-weight: 600; text-align: right;">Total Deposited Amount :&nbsp;</td>
+                        <td colspan="6" style="font-weight: 600; text-align: right;">Total Deposited Amount :&nbsp;</td>
                         <td>${totalAmount}</td>
                     </tr>
                     </tbody>

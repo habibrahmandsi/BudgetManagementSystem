@@ -43,6 +43,23 @@
                                     </div>
                                 </div>
                             </div>
+                           <div class="form-group">
+                                <label><spring:message code="installment.new.btn"/><span
+                                        class="required">*</span></label>
+                                <form:select path="installment.id" cssClass="form-control">
+                                    <option value=""> -- Select Any One --</option>
+                                    <c:forEach items="${installmentList}" var="pg">
+                                        <c:choose>
+                                            <c:when test="${pg.id == deposit.installment.id}">
+                                                <option value="${pg.id}" selected>${pg.name}</option>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <option value="${pg.id}">${pg.name}</option>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                </form:select>
+                            </div>
                             <div class="form-group">
                                 <label><spring:message code="deposit.payment.method"/><span
                                         class="required">*</span></label>
@@ -64,7 +81,7 @@
                                 <form:input path="amount" cssClass="form-control"/>
                             </div>
                         </div>
-                        <div class="col-lg-6 shareHolderDetailsDiv">
+                        <div class="col-lg-6 detailsDiv">
                         </div>
                         <!-- /.row (nested) -->
                     </div>
@@ -131,6 +148,13 @@
                     }
                 },
                 amount: {
+                    validators: {
+                        notEmpty: {
+                            message: "Not Empty"
+                        }
+                    }
+                },
+                "installment.id": {
                     validators: {
                         notEmpty: {
                             message: "Not Empty"
@@ -250,7 +274,7 @@
 
 
     function reDrawShareHolderDetails(empObject){
-        var html = '<div class="shareHolderDetailsWrapperDiv">'
+        var html = '<div class="shareHolderDetailsDiv shareHolderDetailsWrapperDiv">'
             +'<table class="table detailsInfoTable">'
             +'<thead>'
             +'<th colspan="4" class="headerFont">Basic Information</th>'
@@ -298,6 +322,6 @@
             +' </table>'
             +' </div>';
 
-        $(".shareHolderDetailsDiv").html(html);
+        $(".detailsDiv").html(html);
     }
 </script>

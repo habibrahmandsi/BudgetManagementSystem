@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-lg-12">
             <div class="col-lg-4"></div>
-            <div class="col-lg-4" style="text-align: center; font-size: 20px;">
+            <div class="col-lg-4" style="text-align: center; font-size: 15px;">
                 <label class="nonBoldFont"> Total Deposited Amount: <font style="font-weight: 600;">${allDeposit}</font> tk.</label>
             </div>
             <div class="col-lg-4"></div>
@@ -66,6 +66,7 @@
 //            {"sTitle": "Father's Name", "mData": "fathersName", "bSortable": true},
 //            {"sTitle": "Mother's Name", "mData": "mothersName", "bSortable": true},
             {"sTitle": "Mobile No.", "mData": "mobile", "bSortable": true},
+            {"sTitle": "Installment Name", "mData": "installmentName", "bSortable": true},
 
             {
                 "sTitle": "Deposit Amount", "mData": null, "bSortable": true, "render": function (data) {
@@ -77,9 +78,10 @@
             {"sTitle": "Added By", "mData": "createdBy", "bSortable": true},
             {
                 "sTitle": "Action icons", "mData": null, "bSortable": false, "render": function (data) {
-//                var html = '<a class="editUser" title="Edit Share Holder" href="/admin/upsertShareHolder.do?shareHolderId=' + data.id + '"><img class="icon" src="/images/edit-icon.png"></a>';
-                var html = '<a class="editUser" title="Details info of Deposit" href="/admin/depositDetails.do?depositId=' + data.id + '"><img class="icon" src="/images/details-icon.png"></a>';
-                html += '<a class="allDeposit" title="All Deposit of '+data.name+'" href="/admin/allDepositOfSh.do?shareHolderId=' + data.id + '">All Deposits</a>';
+                var html = "";
+                    html += '<a class="editDeposit" title="Edit Deposit" href="/admin/upsertDeposit.do?depositId=' + data.id + '"><img class="icon" src="/images/edit-icon.png"></a>';
+                    html += '<a class="editUser" title="Details info of Deposit" href="/admin/depositDetails.do?depositId=' + data.id + '"><img class="icon" src="/images/details-icon.png"></a>';
+                html += '<a class="allDeposit" title="All Deposit of '+data.name+'" href="/admin/allDepositOfSh.do?shareHolderId=' + data.shareHolderId + '">All Deposits</a>';
 //                html += '<a class="deleteUser" title="Delete user" href="/admin/deleteUser?userId=' + data.id + '"><img class="icon" src="/images/delete-icon.png"></a>';
                 return html;
             }
@@ -89,33 +91,8 @@
         commonDataTableInit("#depositListTable", url, columns, sort, function(){
         });
 
-        $(document).on('click', '.disableUser', function () {
-            return confirm('Are you sure to disable this user?')
-        });
-
-        $(document).on('click', '.enableUser', function () {
-            return confirm('Are you sure to enable this user?')
-        });
-
         $(document).on('click', '.deleteUser', function () {
             return confirm('Are you sure to delete this user?')
-        });
-
-        $(document).on('click', '.userProjectDetails', function () {
-            var usetId = $(this).attr('data-id');
-            $(document).find("a.userProjectDetails").removeClass("userSelected");
-            $(this).addClass("userSelected");
-
-            Recenseo.Tar._blockUI("User Project List showing...");
-            $.get('/admin/userProjectList', {userId:usetId}, function(data) {
-                if (!data.error) {
-                    $(".userDetailsList").html(data);
-                    Recenseo.Tar._unblockUI();
-                } else {
-                    //TODO: Handle exception here
-                    Recenseo.Tar._unblockUI();
-                }
-            });
         });
     });
 </script>
