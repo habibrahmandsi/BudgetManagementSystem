@@ -11,7 +11,7 @@
 <link type="text/css" rel="stylesheet" href="<c:url value="/styles/silver/jquery-ui.css"/>" />
 <link type="text/css" rel="stylesheet" href="<c:url value="/styles/envize.css"/>" />
 <link type="text/css" rel="stylesheet" href="<c:url value="/styles/admin.css"/>" />
-<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,300,700" />
+<%--<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,300,700" />--%>
 
 <script type="text/javascript" src="<c:url value="/scripts/jquery.js"/>" ></script>
 <script type="text/javascript" src="<c:url value="/scripts/jquery-ui.js"/>" ></script>

@@ -4,6 +4,7 @@ public enum PaymentMethodType {
 
     BANK_CHECK("Bank Check"),
     BANK_VOUCHER("Bank Voucher"),
+    CASH("Cash"),
     OTHERS("Others");
 
     private String label;

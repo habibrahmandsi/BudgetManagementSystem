@@ -114,7 +114,7 @@
                 + '<td>'+object.created+'</td>'
                 + '<td>'+object.createdBy+'</td>'
                 + '<td>'+object.amountToPay+'</td>'
-                + '<td><a href="/admin/paidInstallmentShList?installmentId='+object.id+'">'+object.totalPaidCount+'</a></td>'
+                + '<td><a href="/admin/paidInstallmentShList.do?installmentId='+object.id+'">'+object.totalPaidCount+'</a></td>'
                 + '<td>('+object.amountToPay+' * '+'${totalShare}'+') = '+topay+'</td>'
                 + '<td>'+(object.totalPaidAmount).toFixed(2)+'</td>'
                 + '<td>'+(topay- object.totalPaidAmount).toFixed(2)+'</td>'

@@ -2,6 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
+<%
+    final String contextPath = request.getContextPath();
+%>
+
+<script type="text/javascript" src="<c:url value="/scripts/jquery.PrintArea.js"/>"></script>
+
 <div class="panel panel-default">
     <div class="panel-heading">
         <spring:message code="expense.list.title"/>
@@ -18,14 +24,15 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-12">
-                <div class="pull-right">
-                    <input type="button" class="addNewExpense btn btn-primary"
+            <div class="col-lg-8"></div>
+            <div class="col-lg-2">
+                    <input type="button" class="addNewExpense btn btn-block btn-primary"
                            value="<spring:message code="expense.new.btn"/>">
-                </div>
+            </div>
+            <div class="col-lg-2"><button class="btn btn-success btn-block printBtn">Print</button></div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" id="divPrint">
                 <div class="col-lg-12">
                     <table class="table customTable">
                         <thead>
@@ -57,15 +64,41 @@
         </div>
     </div>
 
-</div>
-
 <script type="text/javascript">
-    $(function () {
+    $(document).ready(function () {
+        var contextPath = '<%= contextPath %>';
         var disabledRowId = [];
         var $createBtn = $(".addNewExpense");
         $createBtn.click(function () {
             window.location = "/admin/upsertExpense.do";
         });
 
+        $(".printBtn").click(function () {
+            var options = {
+                "mode": "popup",
+                "popClose": true,
+                "extraCss": contextPath + '/styles/print.css',
+                "retainAttr": ["class", "id", "style", "on"],
+                "extraHead": '<meta charset="utf-8" />,<meta http-equiv="X-UA-Compatible" content="IE=edge"/>'
+            };
+
+            var printDiv = $('<div></div>');
+            var data = $("#divPrint").html();
+            var head = '<div style="text-align: center;padding-bottom: 10px; margin-bottom: 30px;"><table style="display: inline-block;"><tbody> <tr> <td> <img style="height: 35px;" src="/images/bmsLogo.png"></td> </tr> <tr> </tr> </tbody></table></div>'
+
+            data = data.replace("undefined", "");
+            data += $("#footer").show().html();
+
+//            $("#footer").hide();
+            $(printDiv).append(head);
+
+            console.log("SMNLOG:printDiv:" + printDiv);
+            $(printDiv).append(data);
+
+            $(printDiv).printArea(options);
+//            $("#divPrint").printArea( options );
+
+
+        })
     });
 </script>

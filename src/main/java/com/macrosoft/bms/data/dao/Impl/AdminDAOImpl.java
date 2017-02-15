@@ -356,6 +356,7 @@ public class AdminDAOImpl implements AdminDAO {
         String sql = "SELECT "
                 + "new MAP("
                 + " id as id, "
+                + " shareHolder.id as shareHolderId,"
                 + " shareHolder.name as name,"
                 + " shareHolder.mobile as mobile,"
                 + " shareHolder.photoPath as photoPath,"
@@ -510,6 +511,99 @@ public class AdminDAOImpl implements AdminDAO {
             return list;
         }
         return null;
+    }
+
+    public List<Map> getDepositsByInstallmentId(Integer installmentId, Integer shareHolderId) throws Exception{
+
+        StringBuilder sql = new StringBuilder("SELECT "
+                + "new MAP("
+                + " id as id, "
+                + " shareHolder.id as shareHolderId,"
+                + " shareHolder.name as name,"
+                + " shareHolder.mobile as mobile,"
+                + " shareHolder.photoPath as photoPath,"
+                + " shareHolder.photoName as photoName,"
+                + " shareHolder.fathersName as fathersName,"
+                + " shareHolder.mothersName as mothersName,"
+                + " shareHolder.sex as sex,"
+                + " shareHolder.email as email,"
+                + " installment.name as installmentName,"
+                + " amount as amount,"
+                + " createdBy.username as createdBy,"
+                + " date as date,"
+                + " method as method,"
+                + " referenceNo as referenceNo"
+                + ") "
+                + " FROM Deposit WHERE 1=1 ");
+
+        if (installmentId != null && installmentId > 0) {
+            sql.append(" AND installment.id=:installmentId");
+        }
+        if (shareHolderId != null && shareHolderId > 0) {
+            sql.append(" AND shareHolder.id=:shareHolderId");
+        }
+
+        System.out.println("SQL::"+sql);
+        Query query = getCurrentSession().createQuery(sql.toString());
+
+        if (installmentId != null && installmentId > 0) {
+            query.setParameter("installmentId",installmentId);
+        }
+        if (shareHolderId != null && shareHolderId > 0) {
+            query.setParameter("shareHolderId",shareHolderId);
+        }
+        return query.list();
+    }
+
+    public List<Map> getShareHolderWiseTotalDeposit(Integer installmentId, Integer shareHolderId) throws Exception{
+
+        StringBuilder sql = new StringBuilder(/*"SELECT "
+                + "sh.id shareHolderId, sum(d.amount) amount, count(sh.id) noOfInstallation, "
+                + "sh.name, sh.fathers_name fathersName, "
+                + "sh.mothers_name mothersName, sh.national_id, sh.photo_name photoName, "
+                + "sh.email, sh.mobile "
+                + "FROM deposit d "
+                + "JOIN share_holder sh ON(sh.id = d.share_holder_id) "
+                + "LEFT JOIN installment i ON(i.id = d.installment_id) "
+                + "WHERE 1=1 "*/
+                "SELECT "
+                        + "new MAP("
+//                        + " id as id, "
+                        + " shareHolder.id as shareHolderId,"
+                        + " sum(amount) as amount, "
+                        + " count(shareHolder.id) as noOfInstallation,"
+                        + " shareHolder.name as name,"
+                        + " shareHolder.mobile as mobile,"
+                        + " shareHolder.photoName as photoName,"
+                        + " shareHolder.fathersName as fathersName,"
+                        + " shareHolder.mothersName as mothersName,"
+                        + " shareHolder.nationalId as nationalId,"
+                        + " shareHolder.email as email"
+                        + ") "
+                        + " FROM Deposit WHERE 1=1"
+               );
+
+        if (installmentId != null && installmentId > 0) {
+            sql.append(" AND installment.id=:installmentId");
+        }
+        if (shareHolderId != null && shareHolderId > 0) {
+            sql.append(" AND shareHolder.id=:shareHolderId");
+        }
+
+        sql.append(" GROUP BY shareHolder.id, shareHolder.name, shareHolder.fathersName, "
+                + "shareHolder.mothersName, shareHolder.nationalId, shareHolder.photoName, "
+                + "shareHolder.email, shareHolder.mobile");
+
+        System.out.println("SQL::"+sql);
+        Query query = getCurrentSession().createQuery(sql.toString());
+
+        if (installmentId != null && installmentId > 0) {
+            query.setParameter("installmentId",installmentId);
+        }
+        if (shareHolderId != null && shareHolderId > 0) {
+            query.setParameter("shareHolderId",shareHolderId);
+        }
+        return query.list();
     }
 }
 

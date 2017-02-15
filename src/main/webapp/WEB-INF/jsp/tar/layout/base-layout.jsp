@@ -12,6 +12,16 @@
 	<tiles:insertAttribute name="header" />
     <%@ include file="/WEB-INF/jsp/tar/layout/message.jsp" %>
 	<tiles:insertAttribute name="body" />
-
+    <div id="footer">
+        <table style="width: 100%; margin-top: 200px;">
+            <tbody>
+            <tr>
+                <td style="text-align: right !important;color: grey; font-style: italic;">
+                    All right reserve @<img style="height: 20px;" src="/images/Macrosoft-logo.png">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

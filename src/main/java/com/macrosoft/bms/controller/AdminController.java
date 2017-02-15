@@ -1,11 +1,13 @@
 package com.macrosoft.bms.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.macrosoft.bms.data.PaymentMethodType;
 import com.macrosoft.bms.data.dao.Impl.AdminDAOImpl;
 import com.macrosoft.bms.data.dao.Impl.UserDaoImpl;
 import com.macrosoft.bms.data.model.*;
 import com.macrosoft.bms.util.Constants;
 import com.macrosoft.bms.util.Utils;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,11 +92,21 @@ public class AdminController {
         try {
             Double totalExpenseAmount = adminDaoImpl.getTotalExpenseAmount(null, null);
             Double allDeposit = adminDaoImpl.getTotalDepositAmount(0);
-            List<ShareHolder> shareHolderList = adminDaoImpl.getAllShareHolderList();
+            List<Map> depositList = adminDaoImpl.getDepositListByShareHolderId(null);
+            List<Map> shareHolderList = adminDaoImpl.getShareHolderWiseTotalDeposit(null, null);
+            System.out.println("shareHolderList:"+shareHolderList);
+
+            ObjectMapper objectMapper = new ObjectMapper();
+//            String json = objectMapper.writeValueAsString(shareHolderList);
+
+            model.addAttribute("shareHolderListStr", objectMapper.writeValueAsString(shareHolderList).toString());
+            model.addAttribute("depositListStr", objectMapper.writeValueAsString(depositList).toString());
+
             model.addAttribute("shareHolderList",shareHolderList);
             model.addAttribute("allDeposit",Utils.getTwoDigitAfterDecimal(allDeposit));
             model.addAttribute("totalExpenseAmount",Utils.getTwoDigitAfterDecimal(totalExpenseAmount));
             model.addAttribute("totalAvailableAmount",Utils.getTwoDigitAfterDecimal(allDeposit - totalExpenseAmount));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -695,5 +707,25 @@ public class AdminController {
             logger.error("ERROR:" + e);
         }
         return "admin/expenseList";
+    }
+
+    /*
+* Method for viewing installment create/update Page
+* @param HttpServletRequest request, Model model
+* @return type String( or any .jsp File)
+*
+*/
+    @RequestMapping(value = "/admin/paidInstallmentShList.do", method = RequestMethod.GET)
+    public String paidInstallmentShListView(HttpServletRequest request, Model model) {
+        logger.debug("*************** paid Installment Share holder list Controller ***************");
+        Integer installmentId = request.getParameter("installmentId") != null ? Integer.parseInt(request.getParameter("installmentId")) : 0;
+
+        try {
+            List<Map> depositList = adminDaoImpl.getDepositsByInstallmentId(installmentId, null);
+            model.addAttribute("depositList",depositList);
+        } catch (Exception e) {
+            logger.error("ERROR:" + e);
+        }
+        return "admin/paidInstallmentShList";
     }
 }

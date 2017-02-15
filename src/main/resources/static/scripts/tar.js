@@ -9,6 +9,7 @@ Recenseo.Tar = {
     INIT_TABLE_DISPLAY_ROW_SIZE: 20,
     GLOBAL_DATE_FORMAT: 'MMM dd, yyyy hh:mm tt',
     GLOBAL_DATE_FORMAT_FOR_JAVA: 'dd/MM/yyyy',
+    GLOBAL_DATE_FORMAT_FOR_JS: 'dd/MM/yyyy hh:mm tt',
 	getActions: function() {
 		return {
 			ADD_TO_POPULATION: {
