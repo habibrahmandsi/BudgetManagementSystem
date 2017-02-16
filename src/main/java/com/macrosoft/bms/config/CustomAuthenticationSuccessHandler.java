@@ -1,6 +1,8 @@
 package com.macrosoft.bms.config;
 
 import com.macrosoft.bms.data.dao.Impl.AdminDAOImpl;
+import com.macrosoft.bms.data.model.User;
+import com.macrosoft.bms.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -19,7 +21,7 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
     @Autowired
-    private AdminDAOImpl envityDaoImpl;
+    private AdminDAOImpl adminDaoImpl;
 
     private RequestCache requestCache = new HttpSessionRequestCache();
 
@@ -27,6 +29,13 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws ServletException, IOException {
         SavedRequest savedRequest = requestCache.getRequest(request, response);
+        User user = null;
+        try {
+            user = (User) adminDaoImpl.getUserByUserName(Utils.getLoggedInUsername());
+            request.getSession().setAttribute("userAccessibleRoles", user.getRole());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (savedRequest == null) {
             HttpSession session = request.getSession();

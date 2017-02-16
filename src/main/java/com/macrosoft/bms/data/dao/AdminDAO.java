@@ -27,4 +27,5 @@ public interface AdminDAO extends GenericTableDao<Object, Serializable>{
     List<Expense> getAllExpenseList(Date fromDate, Date toDate) throws Exception;
     List<ShareHolder> getAllShareHolderList() throws Exception;
     List<Map> getShareHolderWiseTotalDeposit(Integer installmentId, Integer shareHolderId) throws Exception;
+    User getUserByUserName(String userName) throws Exception;
 }

@@ -23,5 +23,12 @@
             </tbody>
         </table>
     </div>
+
+
+    <script>
+        userAccessibleRoles = "<%=request.getSession().getAttribute("userAccessibleRoles")%>";
+        console.log("SMNLOG:userAccessibleRoles:"+userAccessibleRoles);
+    </script>
+
 </body>
 </html>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <link type="text/css" rel="stylesheet" href="<c:url value="/styles/datatable/datatables.bootstrap.css"/>"/>
 <script type="text/javascript" src="<c:url value="/scripts/datatable/datatables.min.js"/>"></script>
@@ -25,8 +26,10 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="pull-right">
-                    <input type="button" class="addNewDeposit btn btn-primary"
-                           value="<spring:message code="deposit.new.btn"/>">
+                    <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+                        <input type="button" class="addNewDeposit btn btn-primary"
+                               value="<spring:message code="deposit.new.btn"/>">
+                    </sec:authorize>
                 </div>
             </div>
         </div>
@@ -79,9 +82,12 @@
             {
                 "sTitle": "Action icons", "mData": null, "bSortable": false, "render": function (data) {
                 var html = "";
+                if(userAccessibleRoles == 'ROLE_ADMIN'){
                     html += '<a class="editDeposit" title="Edit Deposit" href="/admin/upsertDeposit.do?depositId=' + data.id + '"><img class="icon" src="/images/edit-icon.png"></a>';
-                    html += '<a class="editUser" title="Details info of Deposit" href="/admin/depositDetails.do?depositId=' + data.id + '"><img class="icon" src="/images/details-icon.png"></a>';
-                html += '<a class="allDeposit" title="All Deposit of '+data.name+'" href="/admin/allDepositOfSh.do?shareHolderId=' + data.shareHolderId + '">All Deposits</a>';
+                }
+//                        html += '<a class="editUser" title="Details info of Deposit" href="/admin/depositDetails.do?depositId=' + data.id + '"><img class="icon" src="/images/details-icon.png"></a>';
+
+                html += '&nbsp;&nbsp;<a class="allDeposit" title="All Deposit of '+data.name+'" href="/admin/allDepositOfSh.do?shareHolderId=' + data.shareHolderId + '">All Deposits</a>';
 //                html += '<a class="deleteUser" title="Delete user" href="/admin/deleteUser?userId=' + data.id + '"><img class="icon" src="/images/delete-icon.png"></a>';
                 return html;
             }

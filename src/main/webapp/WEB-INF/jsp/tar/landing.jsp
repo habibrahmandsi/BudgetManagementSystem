@@ -191,7 +191,7 @@
                             + '</tr>'
                             + ' <tr>'
                             + ' <td>National Id :</td>'
-                            + ' <td>' + sh.national_id + '</td>'
+                            + ' <td>' + sh.nationalId + '</td>'
                             + '<td></td>'
                             + ' </tr>'
                             + ' <tr>'

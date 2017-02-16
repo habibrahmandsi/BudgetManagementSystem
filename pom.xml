@@ -4,13 +4,14 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.macrosoft</groupId>
-	<artifactId>BudgetManagementSystem</artifactId>
+	<artifactId>bms</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<name>BudgetManagementSystem</name>
-	<description>Relativity-Envize Integration</description>
+	<description>Budget management system</description>
 
+	
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -20,7 +21,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>1.8</java.version>
+		<java.version>1.7</java.version>
 	</properties>
 
 	<dependencies>
@@ -169,5 +170,26 @@
 		</plugins>
 	</build>
 	
+
+
+	<!-- for openshift deployment-->
+	<profiles>
+		<profile>
+			<id>openshift</id>
+			<build>
+				<finalName>api</finalName>
+				<plugins>
+					<plugin>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>2.1.1</version>
+						<configuration>
+							<outputDirectory>webapps</outputDirectory>
+							<warName>ROOT</warName>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>

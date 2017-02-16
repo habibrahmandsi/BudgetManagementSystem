@@ -23,12 +23,12 @@
 	                </a>
 	                <div class="dropdown-content">
 	                    <a class="logout"><spring:message code="header.menu.logout"/></a>
-	                    <a class=""><spring:message code="header.menu.about"/></a>
+	                    <%--<a class=""><spring:message code="header.menu.about"/></a>--%>
 	                </div>
 	            </li>
 	        </ul>
 	    </sec:authorize>
-        <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+        <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_VIEW')">
             <ul class="menuSeparator">
                 <li class="dropdown">
                     <a style="padding: 10px 5px;" href="#" class="dropbtn ">
@@ -36,7 +36,9 @@
                         <img class="downArrow" src="/images/down-arrow-icon.png">
                     </a>
                     <div class="dropdown-content">
-                        <a href="/admin/upsertShareHolder.do"><spring:message code="header.menu.shareHolder.add"/></a>
+                        <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+                            <a href="/admin/upsertShareHolder.do"><spring:message code="header.menu.shareHolder.add"/></a>
+                        </sec:authorize>
                         <a href="/admin/shareHolderList.do"><spring:message code="shareHolder.list.header"/></a>
                     </div>
                 </li>
@@ -46,15 +48,22 @@
                         <img class="downArrow" src="/images/down-arrow-icon.png">
                     </a>
                     <div class="dropdown-content">
+                        <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
                         <a href="/admin/upsertInstallment.do"><spring:message code="header.menu.new.installment"/></a>
+                        </sec:authorize>
                         <a href="/admin/installmentList.do"><spring:message code="header.menu.installment.list"/></a>
-                        <a href="/admin/upsertDeposit.do"><spring:message code="header.menu.credit"/></a>
+                        <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+                            <a href="/admin/upsertDeposit.do"><spring:message code="header.menu.credit"/></a>
+                        </sec:authorize>
+
                         <a href="/admin/depositList.do"><spring:message code="header.menu.deposit.list"/></a>
-                        <a href="/admin/upsertExpense.do"><spring:message code="header.menu.new.debit"/></a>
+                        <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+                            <a href="/admin/upsertExpense.do"><spring:message code="header.menu.new.debit"/></a>
+                        </sec:authorize>
                         <a href="/admin/expenseList.do"><spring:message code="header.menu.debit"/></a>
                     </div>
                 </li>
-                <li class="dropdown">
+               <%-- <li class="dropdown">
                     <a style="padding: 10px 5px;" href="#" class="dropbtn ">
                         <img class="downArrow" src="/images/report-icon.png">Reports
                         <img class="downArrow" src="/images/down-arrow-icon.png">
@@ -63,11 +72,11 @@
                         <a href="/admin/depositList.do"><spring:message code="header.menu.credit"/></a>
                         <a href="/admin/userList.do"><spring:message code="header.menu.debit"/></a>
                     </div>
-                </li>
+                </li>--%>
             </ul>
         </sec:authorize>
         <%--<div class="loggedUserFullname"> Welcome, ${principal.fullName}</div>--%>
-        <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+        <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_VIEW')">
             <c:if test="${not empty globalMessages}">
             <div style="width:70px; float: right; margin-top: 8px;">
                 <a href="/admin/services"><img class="icon"

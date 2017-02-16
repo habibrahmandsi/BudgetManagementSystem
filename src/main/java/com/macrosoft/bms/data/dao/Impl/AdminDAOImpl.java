@@ -605,5 +605,14 @@ public class AdminDAOImpl implements AdminDAO {
         }
         return query.list();
     }
+
+    public User getUserByUserName(String userName) throws Exception{
+        Query query = getCurrentSession().createQuery("FROM User WHERE username = :userName");
+        query.setParameter("userName", userName);
+        Object object = query.uniqueResult();
+        if (object != null)
+            return (User) object;
+        return null;
+    }
 }
 

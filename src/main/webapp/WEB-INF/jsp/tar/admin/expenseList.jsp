@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <%
     final String contextPath = request.getContextPath();
@@ -26,8 +27,10 @@
         <div class="row">
             <div class="col-lg-8"></div>
             <div class="col-lg-2">
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
                     <input type="button" class="addNewExpense btn btn-block btn-primary"
                            value="<spring:message code="expense.new.btn"/>">
+                </sec:authorize>
             </div>
             <div class="col-lg-2"><button class="btn btn-success btn-block printBtn">Print</button></div>
             </div>

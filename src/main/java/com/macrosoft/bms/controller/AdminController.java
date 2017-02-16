@@ -90,6 +90,8 @@ public class AdminController {
         System.out.println("----------------- tar/landing ---------------");
 
         try {
+
+
             Double totalExpenseAmount = adminDaoImpl.getTotalExpenseAmount(null, null);
             Double allDeposit = adminDaoImpl.getTotalDepositAmount(0);
             List<Map> depositList = adminDaoImpl.getDepositListByShareHolderId(null);
@@ -215,7 +217,8 @@ public class AdminController {
 
         try {
 
-            int totalRecords = Math.toIntExact(adminDaoImpl.getDepositDataSize());
+//            int totalRecords = Math.toIntExact(adminDaoImpl.getDepositDataSize());
+            int totalRecords = ((Number)adminDaoImpl.getDepositDataSize()).intValue();
             logger.info("totalRecords:" + totalRecords + " length:" + length);
             if (length < 0) {
                 userDataMap = adminDaoImpl.getDeposits(start, totalRecords + 1, sortColName, sortType, searchKey);
@@ -361,7 +364,7 @@ public class AdminController {
         Map<String, Object> userDataMap;
 
         try {
-            int totalRecords = Math.toIntExact(adminDaoImpl.getShareHolderDataSize());
+            int totalRecords = ((Number)adminDaoImpl.getShareHolderDataSize()).intValue();
             logger.info("totalRecords:" + totalRecords + " length:" + length+" sortColName:"+sortColName);
             if (length < 0) {
                 userDataMap = adminDaoImpl.getShareHolders(start, totalRecords + 1, sortColName, sortType, searchKey);
@@ -599,7 +602,8 @@ public class AdminController {
     public String installmentListView(HttpServletRequest request, Model model) {
         logger.debug("*************** Installment list Controller ***************");
         try {
-            int totalShare = Math.toIntExact(adminDaoImpl.getShareHolderDataSize());
+//            int totalShare = Math.toIntExact(adminDaoImpl.getShareHolderDataSize());
+            int totalShare = ((Number)adminDaoImpl.getShareHolderDataSize()).intValue();
             List<Map> installmentList = adminDaoImpl.getInstallment();
             List<Map> depositList = adminDaoImpl.getDepositListByShareHolderId(null);
 
@@ -729,3 +733,4 @@ public class AdminController {
         return "admin/paidInstallmentShList";
     }
 }
+
