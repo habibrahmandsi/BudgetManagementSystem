@@ -127,8 +127,8 @@
                 totalpaid += object.totalPaidAmount;
         });
 
-        tbody += '<tr>'
-            + '<td colspan="8" style="text-align: right;">Total</td>'
+        tbody += '<tr style="font-weight: 600;">'
+            + '<td colspan="8" style="text-align: right;">Total: </td>'
             + '<td>'+totalpayable+'</td>'
             + '<td>'+totalpaid+'</td>'
             + '<td>'+totalUnpaid+'</td>'

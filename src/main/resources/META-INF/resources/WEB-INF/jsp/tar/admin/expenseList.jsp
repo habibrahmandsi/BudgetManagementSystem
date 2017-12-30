@@ -42,6 +42,7 @@
                         <tr>
                             <th class="headerFont">SL#</th>
                             <th class="headerFont">Expense Item Name</th>
+                            <th class="headerFont">Description</th>
                             <th class="headerFont">Date</th>
                             <th class="headerFont">Created By</th>
                             <th class="headerFont">Amount</th>
@@ -52,13 +53,14 @@
                              <tr>
                                  <td>${idx.index+1}</td>
                                  <td>${obj.expenseItem.name}</td>
+                                 <td>${obj.description}</td>
                                  <td>${obj.date}</td>
                                  <td>${obj.createdBy.username}</td>
                                  <td>${obj.amount}</td>
                              </tr>
                          </c:forEach>
                         <tr>
-                            <td colspan="4" style="font-weight: 600; text-align: right;">Total Expense Amount :&nbsp;</td>
+                            <td colspan="5" style="font-weight: 600; text-align: right;">Total Expense Amount :&nbsp;</td>
                             <td>${totalExpenseAmount}</td>
                         </tr>
                         </tbody>

@@ -36,7 +36,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
 	private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
 			"classpath:/META-INF/resources/", "classpath:/resources/",
-			"classpath:/static/"};
+			"classpath:/static/", "classpath:/WEB-INF/"};
 
 	@Bean
 	public ViewResolver viewResolver() {

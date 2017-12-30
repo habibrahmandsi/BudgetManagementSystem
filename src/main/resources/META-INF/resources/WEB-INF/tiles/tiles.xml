@@ -10,22 +10,22 @@
 		<put-attribute name="body" value="" />
 	</definition>
 
+
+
 	<!-- without header definition start -->
     <definition name="tar/document"  template="/WEB-INF/jsp/tar/layout/layoutWithoutHeaderFooter.jsp">
         <put-attribute name="head" value="/WEB-INF/jsp/tar/layout/head.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/tar/document.jsp" />
     </definition>
-
-    <definition name="tar/createControlSample"  template="/WEB-INF/jsp/tar/layout/layoutWithoutHeaderFooter.jsp">
-        <put-attribute name="head" value="/WEB-INF/jsp/tar/layout/head.jsp" />
-        <put-attribute name="body" value="/WEB-INF/jsp/tar/createControlSample.jsp" />
-    </definition>
-
+    
     <definition name="common/*"  template="/WEB-INF/jsp/tar/layout/layoutWithoutHeaderFooter.jsp">
         <put-attribute name="head" value="/WEB-INF/jsp/tar/layout/head.jsp" />
         <put-attribute name="body" value="/WEB-INF/jsp/common/{1}.jsp" />
     </definition>
 
+	<definition name="common/error" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/common/error.jsp" />
+	</definition>
 
 	<definition name="admin/userProjectList"  template="/WEB-INF/jsp/tar/layout/layoutWithoutHeaderFooter.jsp">
         <put-attribute name="head" value="/WEB-INF/jsp/tar/layout/head.jsp" />
@@ -41,6 +41,12 @@
 		<put-attribute name="head" value="/WEB-INF/jsp/tar/layout/head.jsp" />
 		<put-attribute name="body" value="/WEB-INF/jsp/tar/admin/addUserToProject.jsp" />
 	</definition>
+
+	<definition name="cal/checkPoint"  template="/WEB-INF/jsp/tar/layout/layoutWithoutHeaderFooter.jsp">
+		<put-attribute name="head" value="/WEB-INF/jsp/tar/layout/head.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/tar/cal/checkPoint.jsp" />
+	</definition>
+
     <!-- without header definition end -->
 
 	<definition name="admin/*"  extends="baseLayout">
@@ -49,6 +55,18 @@
 
 	<definition name="tar/*" extends="baseLayout">
 		<put-attribute name="body" value="/WEB-INF/jsp/tar/{1}.jsp" />
+	</definition>
+	
+	<definition name="tar/dialog/*"  template="/WEB-INF/jsp/tar/layout/layoutDialog.jsp">
+        <put-attribute name="body" value="/WEB-INF/jsp/tar/dialog/{1}.jsp" />
+    </definition>
+
+	<definition name="user/*"  extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/tar/user/{1}.jsp" />
+	</definition>
+
+	<definition name="cal/*"  extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/tar/cal/{1}.jsp" />
 	</definition>
 
 </tiles-definitions>
